@@ -55,3 +55,13 @@
 .forgot-password a {
   color: #167bff;
 }
+.login-container {
+  background-image: url('./assets/bg.jpg');
+  background-size: cover;
+
+  height: 100vh;
+
+  /* justify-content: center; */
+  /* align-items: center;  */
+  background-position: center;
+} 
