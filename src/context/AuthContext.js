@@ -2,7 +2,8 @@ import { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { setstaff } from '../slices/staffSilce';
-import { UseDispatch, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
+import { BASE_URL } from '../constants';
 const AuthContext = createContext();
 export default AuthContext;
 export const AuthProvider = ({ children }) => {
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginUser = async (username, password) => {
-    let response = await fetch('http://127.0.0.1:8000/auth/jwt/create/', {
+    let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,12 +31,17 @@ export const AuthProvider = ({ children }) => {
     });
 
 
-    let userInfo = await fetch('http://127.0.0.1:8000/auth/users/me/', {
+    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    const userInfo = await response1.json();
+    dispatch({...userInfo})
+
+
+
 
 
     let data = await response.json();
@@ -59,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateToken = async () => {
 
-    let response = await fetch('http://127.0.0.1:8000/auth/jwt/refresh/', {
+    let response = await fetch(`${BASE_URL}/auth/jwt/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,9 +73,9 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ refresh: authTokens?.refresh }),
     });
 
-    const response1 = await fetch('http://127.0.0.1:8000/auth/users/me/', {
+    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
     method: 'GET',
-    // You can include headers if required
+    
     headers: {
       'Authorization': 'Bearer YourAccessToken',
       'Content-Type': 'application/json'
