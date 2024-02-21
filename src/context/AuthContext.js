@@ -61,18 +61,18 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ refresh: authTokens?.refresh }),
     });
-    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YourAccessToken',
-      'Content-Type': 'application/json'
-    }
-  });
-  if (!response1.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const userInfo = await response1.json();
-  dispatch(setstaff({...userInfo}))
+  //   const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Authorization': 'Bearer YourAccessToken',
+  //     'Content-Type': 'application/json'
+  //   }
+  // });
+  // if (!response1.ok) {
+  //   throw new Error('Network response was not ok');
+  // }
+  // const userInfo = await response1.json();
+  // dispatch(setstaff({...userInfo}))
   
     let data = await response.json();
     if (response.status === 200) {
