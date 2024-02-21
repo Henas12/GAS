@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       },
     });
     const userInfo = await response1.json();
-    dispatch({...userInfo})
+    dispatch(setstaff({...userInfo}))
     let data = await response.json();
     if (response.status === 200) {
       console.log(response)
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     throw new Error('Network response was not ok');
   }
   const userInfo = await response1.json();
-  dispatch({...userInfo})
+  dispatch(setstaff({...userInfo}))
   
     let data = await response.json();
     if (response.status === 200) {
