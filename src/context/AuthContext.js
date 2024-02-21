@@ -30,6 +30,15 @@ export const AuthProvider = ({ children }) => {
 
 
 
+    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      method: 'GET',
+      headers: {
+        'Authorization':  `Bearer ${ data.access}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const userInfo = await response1.json();
+    dispatch(setstaff({...userInfo}))
  
     if (response.status === 200) {
       console.log(response)
@@ -42,15 +51,6 @@ export const AuthProvider = ({ children }) => {
     }
 
 
-    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Authorization':  `Bearer ${ data.access}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    const userInfo = await response1.json();
-    dispatch(setstaff({...userInfo}))
   };
 
   const logoutUser = () => {
@@ -74,7 +74,20 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
 
     
+    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      method: 'GET',
+      headers: {
+        'Authorization':  `Bearer ${ data.access}`,
+        'Content-Type': 'application/json',
   
+    
+      }
+    });
+    if (!response1.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const userInfo = await response1.json();
+    dispatch(setstaff({...userInfo}))
    
     if (response.status === 200) {
       
@@ -90,20 +103,7 @@ export const AuthProvider = ({ children }) => {
       logoutUser();
     }
 
-    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Authorization':  `Bearer ${ data.access}`,
-        'Content-Type': 'application/json',
-  
-    
-      }
-    });
-    if (!response1.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const userInfo = await response1.json();
-    dispatch(setstaff({...userInfo}))
+ 
 
     if (loading) {
       setLoading(false);
@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
     if (loading) {
       updateToken();
     }
-    const fourMinutes = 1000 * 4 ;
+    const fourMinutes = 1000 * 4 *60;
     const interval = setInterval(() => {
       if (authTokens) {
         updateToken();
