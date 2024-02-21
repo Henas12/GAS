@@ -26,15 +26,11 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username: username, password: password }),
     });
-    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const userInfo = await response1.json();
-    dispatch(setstaff({...userInfo}))
     let data = await response.json();
+
+
+
+ 
     if (response.status === 200) {
       console.log(response)
       setAuthTokens(data);
@@ -44,6 +40,17 @@ export const AuthProvider = ({ children }) => {
     } else {
       toast.error('Invalid Credential!');
     }
+
+
+    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      method: 'GET',
+      headers: {
+        'Authorization':  `Bearer ${ data.access}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const userInfo = await response1.json();
+    dispatch(setstaff({...userInfo}))
   };
 
   const logoutUser = () => {
@@ -61,20 +68,14 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ refresh: authTokens?.refresh }),
     });
-  //   const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Authorization': 'Bearer YourAccessToken',
-  //     'Content-Type': 'application/json'
-  //   }
-  // });
-  // if (!response1.ok) {
-  //   throw new Error('Network response was not ok');
-  // }
-  // const userInfo = await response1.json();
-  // dispatch(setstaff({...userInfo}))
-  
+
+
+
     let data = await response.json();
+
+    
+  
+   
     if (response.status === 200) {
       
       setAuthTokens((prevTokens) => ({
@@ -88,6 +89,21 @@ export const AuthProvider = ({ children }) => {
     } else {
       logoutUser();
     }
+
+    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      method: 'GET',
+      headers: {
+        'Authorization':  `Bearer ${ data.access}`,
+        'Content-Type': 'application/json',
+  
+    
+      }
+    });
+    if (!response1.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const userInfo = await response1.json();
+    dispatch(setstaff({...userInfo}))
 
     if (loading) {
       setLoading(false);
