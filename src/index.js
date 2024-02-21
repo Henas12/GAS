@@ -36,6 +36,7 @@ import MultiStepForm from './views/ui/Form';
 import GuardianForm from './views/ui/GuardianForm';
 import Students from './views/ui/Students';
 import Apps from './views/ui/Apps';
+import StaffBase from './App';
 import Guardians from './views/ui/Guardians';
 import Guardian from './views/ui/Guardian';
 import Mystudents from './views/ui/MyStudent';
@@ -43,6 +44,7 @@ import Login from './views/Staff';
 import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import New from './views/ui/new';
+import AdminRoute from './utils/AdminRoute';
 
 
 
@@ -68,8 +70,8 @@ const router = createBrowserRouter(
             <Route path='/table' element={<Tables />} /> 
             <Route path='/breadcrumbs' element={<Breadcrumbs />} /> 
             <Route path='/grid' element={<Grid />} /> 
-            <Route path='/register' element={<Registration />} />   
-            <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} /> 
+            <Route path="/register" element={<AdminRoute><Registration/></AdminRoute>} /> 
+            {/* <Route path='/register' element={<Registration />} />    */}
           </Route>
 
     
@@ -78,6 +80,12 @@ const router = createBrowserRouter(
           <Route path='/staff-login' element={<Login />} /> 
           <Route path='/test' element={<Test />} /> 
           </Route>
+
+<Route path='/' element={<StaffBase />}> 
+<Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} /> 
+
+<Route path='/test' element={<Test />} /> 
+</Route>
    
 
           </>    

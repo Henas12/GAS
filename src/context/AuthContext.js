@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     window.location.href = path;
   };
   const loginUser = async (username, password) => {
+    console.log('hena')
     let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
       method: 'POST',
       headers: {
@@ -45,6 +46,8 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
 
+      
+      localStorage.setItem('authTokens', JSON.stringify(data));
       const userInfo = {
         "id":user.user_id,
         "first_name":"Henok",
@@ -56,7 +59,6 @@ export const AuthProvider = ({ children }) => {
       
       }
         dispatch(setstaff({...userInfo}))
-      localStorage.setItem('authTokens', JSON.stringify(data));
       navigateTo('/home'); // Redirect to home page upon login
     } else {
       toast.error('Invalid Credential!');
@@ -108,6 +110,9 @@ export const AuthProvider = ({ children }) => {
       }));
    
       setUser(jwtDecode(data.access));
+      
+      localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
+      console.log(user)
       const userInfo = {
         "id":user.user_id,
         "first_name":"Henok",
@@ -119,8 +124,6 @@ export const AuthProvider = ({ children }) => {
       
       }
         dispatch(setstaff({...userInfo}))
-      localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
-   
     } else {
       logoutUser();
     }
