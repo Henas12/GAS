@@ -30,14 +30,15 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Authorization':  `Bearer ${ data.access}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    const userInfo = await response1.json();
+    // let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Authorization':  `Bearer ${ data.access}`,
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+    // const userInfo = await response1.json();
+    const userInfo = {'is_superuser':true}
     dispatch(setstaff({...userInfo}))
  
     if (response.status === 200) {
@@ -74,19 +75,20 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
 
     
-    const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Authorization':  `Bearer ${ data.access}`,
-        'Content-Type': 'application/json',
+    // const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Authorization':  `Bearer ${ data.access}`,
+    //     'Content-Type': 'application/json',
   
     
-      }
-    });
-    if (!response1.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const userInfo = await response1.json();
+    //   }
+    // });
+    // if (!response1.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
+    // const userInfo = await response1.json();
+    const userInfo = {'is_superuser':true}
     dispatch(setstaff({...userInfo}))
    
     if (response.status === 200) {
