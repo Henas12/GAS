@@ -38,13 +38,24 @@ export const AuthProvider = ({ children }) => {
     //   },
     // });
     // const userInfo = await response1.json();
-    const userInfo = {'is_superuser':true}
-    dispatch(setstaff({...userInfo}))
+    
  
     if (response.status === 200) {
       console.log(response)
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
+
+      const userInfo = {
+        "id":user.user_id,
+        "first_name":"Henok",
+        "last_name":'Deme',
+        "username":"hena",
+        "is_staff": true,
+        "is_superuser":false,
+        "email":"hena@gmail.com",
+      
+      }
+        dispatch(setstaff({...userInfo}))
       localStorage.setItem('authTokens', JSON.stringify(data));
       navigateTo('/home'); // Redirect to home page upon login
     } else {
@@ -88,9 +99,7 @@ export const AuthProvider = ({ children }) => {
     //   throw new Error('Network response was not ok');
     // }
     // const userInfo = await response1.json();
-    const userInfo = {'is_superuser':true}
-    dispatch(setstaff({...userInfo}))
-   
+  
     if (response.status === 200) {
       
       setAuthTokens((prevTokens) => ({
@@ -99,8 +108,19 @@ export const AuthProvider = ({ children }) => {
       }));
    
       setUser(jwtDecode(data.access));
+      const userInfo = {
+        "id":user.user_id,
+        "first_name":"Henok",
+        "last_name":'Deme',
+        "username":"hena",
+        "is_staff": true,
+        "is_superuser":false,
+        "email":"hena@gmail.com",
+      
+      }
+        dispatch(setstaff({...userInfo}))
       localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
-      console.log(user)
+   
     } else {
       logoutUser();
     }
