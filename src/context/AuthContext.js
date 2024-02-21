@@ -11,16 +11,13 @@ export const AuthProvider = ({ children }) => {
   const [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
   );
-
   const [user, setUser] = useState(() =>
     localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null
   );
   const [loading, setLoading] = useState(true);
-
   const navigateTo = (path) => {
     window.location.href = path;
   };
-
   const loginUser = async (username, password) => {
     let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
       method: 'POST',
@@ -29,8 +26,6 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username: username, password: password }),
     });
-
-
     let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
       method: 'GET',
       headers: {
@@ -39,11 +34,6 @@ export const AuthProvider = ({ children }) => {
     });
     const userInfo = await response1.json();
     dispatch({...userInfo})
-
-
-
-
-
     let data = await response.json();
     if (response.status === 200) {
       console.log(response)
@@ -64,7 +54,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateToken = async () => {
-
     let response = await fetch(`${BASE_URL}/auth/jwt/refresh/`, {
       method: 'POST',
       headers: {
@@ -72,20 +61,16 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ refresh: authTokens?.refresh }),
     });
-
     const response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
     method: 'GET',
-    
     headers: {
       'Authorization': 'Bearer YourAccessToken',
       'Content-Type': 'application/json'
     }
   });
-  
   if (!response1.ok) {
     throw new Error('Network response was not ok');
   }
-  
   const userInfo = await response1.json();
   dispatch({...userInfo})
   
@@ -98,11 +83,8 @@ export const AuthProvider = ({ children }) => {
       }));
    
       setUser(jwtDecode(data.access));
-      
-      
       localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
       console.log(user)
-     
     } else {
       logoutUser();
     }
@@ -115,9 +97,7 @@ export const AuthProvider = ({ children }) => {
     if (loading) {
       updateToken();
     }
-
     const fourMinutes = 1000 * 4 ;
-
     const interval = setInterval(() => {
       if (authTokens) {
         updateToken();
@@ -131,6 +111,5 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
   };
-
   return <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>;
 };
