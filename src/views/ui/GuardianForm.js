@@ -23,6 +23,11 @@ const GuardianForm = () => {
     last_name : '',
     phone_number : '',
     relationship : '',
+    gender : '',
+    birthDate: '',
+    address: '',
+
+
 
   });
 
@@ -37,27 +42,47 @@ const GuardianForm = () => {
           guardianFormDatas.append('username', guardianFormData.username)
           guardianFormDatas.append('user_photo', blob, 'image.jpg');
           guardianFormDatas.append( 'first_name',guardianFormData.first_name)
-            guardianFormDatas.append('last_name', guardianFormData.last_name)
-            guardianFormDatas.append('phone_number', guardianFormData.phone_number)
-                guardianFormDatas.append('relationship', guardianFormData.relationship)   
+          guardianFormDatas.append('last_name', guardianFormData.last_name)
+          guardianFormDatas.append('phone_number', guardianFormData.phone_number)
+          guardianFormDatas.append('relationship', guardianFormData.relationship)
+          // guardianFormDatas.append('gender', guardianFormData.gender)
+          guardianFormDatas.append('date_of_birth', guardianFormData.birthDate)
+          guardianFormDatas.append('address', guardianFormData.address)
       }
+  
+
+  
+  
+  
   const [newGuardian, setNewGuardian] = useState(false);
   const [refetchs, setRefetchs] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const webcamRef = useRef(null);
+
+
+
+  
   const handleRegisterGuardians=()=>{
     setNewGuardian(true)
+    
   }
+
+
   const handleNext = () => {
+    
     if (validateStep()) {
         if(guardianFormDatas)
         {
         setPreview(true)    
         }
+      
+   
     } else {
       toast.error('Please fill all the required fields correctly before proceeding.');
     }
   };
+
+;
 
  
 
@@ -102,8 +127,22 @@ const GuardianForm = () => {
       }
       if (guardianFormData.relationship.trim() === '') {
         errors.relationship = 'Relationship is required';
-        valid = false;<Image src={guardianFormData.image} alt="Image description" fluid />
+        valid = false;
       }
+
+      if (guardianFormData.gender.trim() === '') {
+        errors.gender = 'Gender is required';
+        valid = false;
+      }
+      if (guardianFormData.birthDate.trim() === '') {
+        errors.birthDate = 'Relationship is required';
+        valid = false;
+      }
+          if (guardianFormData.address.trim() === '') {
+        errors.address = 'Relationship is required';
+        valid = false;
+      }
+      
     }
 
     setFormErrors(errors);
