@@ -23,19 +23,13 @@ const StaffBase = () => {
   <main>
       <div className="pageWrapper d-lg-flex">
         {/********Sidebar**********/}
-        {!hideSidebar && ( <aside className="sidebarArea shadow" id="sidebarArea">
-        
-    <Sidebar />
-    
-    </aside>
-    )}
           
        
         {/********Content Area**********/}
 
         <div className="contentArea">
           {/********header**********/}
-        
+          {(!hideHeader && <Header />)}
           {/********Middle Content**********/}
           <Container className="p-4 wrapper" fluid>
             <Outlet />

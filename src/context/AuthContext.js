@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
-import { setstaff } from '../slices/staffSilce';
+import { setstaff,resetstaff } from '../slices/staffSilce';
 import {  useDispatch } from 'react-redux';
 import { BASE_URL } from '../constants';
 const AuthContext = createContext();
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       
       localStorage.setItem('authTokens', JSON.stringify(data));
       const userInfo = {
-        "id":user.user_id,
+        "id":user?.user_id,
         "first_name":"Henok",
         "last_name":'Deme',
         "username":"hena",
@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
   const logoutUser = () => {
     setAuthTokens(null);
     setUser(null);
+    dispatch(resetstaff())
     localStorage.removeItem('authTokens');
     // navigateTo('/staff-login'); // Redirect to login page upon logout
   };
@@ -125,6 +126,7 @@ export const AuthProvider = ({ children }) => {
       }
         dispatch(setstaff({...userInfo}))
     } else {
+      dispatch(resetstaff())
       logoutUser();
     }
 

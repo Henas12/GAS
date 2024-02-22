@@ -109,15 +109,7 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             onChange={handleGuadianInputChange}
             />
             {formErrors.username && <Alert variant="danger">{formErrors.username}</Alert>}
-            </Form.Group>
-
-
-
-
-
-
-
-            
+            </Form.Group>            
             <Form.Group controlId="gender">
             <Form.Label>Gender</Form.Label>
             <Form.Control as="select" name="gender" value={formData.gender} onChange={handleGuadianInputChange}>
@@ -138,8 +130,6 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             />
             {formErrors.birthDate && <Alert variant="danger">{formErrors.birthDate}</Alert>}
             </Form.Group>
-
-
             <Form.Group controlId="relation">
             <Form.Label>Relation</Form.Label>
             <Form.Control as="select" name="relationship" value={formData.relationship} onChange={handleGuadianInputChange}>
@@ -161,9 +151,6 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             />
             {formErrors.phone_number && <Alert variant="danger">{formErrors.phone_number}</Alert>}
             </Form.Group>
-
-
-
             <Form.Group controlId="address">
             <Form.Label>Address</Form.Label>
             <Form.Control
@@ -174,10 +161,6 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             />
             {formErrors.address && <Alert variant="danger">{formErrors.address}</Alert>}
             </Form.Group>
-
-
-
-
             <Button variant="primary" onClick={checkInput}>
        Capture Image
      </Button>

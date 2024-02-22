@@ -9,7 +9,6 @@ import { setStudent, resetStudent } from "../../slices/studentSlice";
 import { useEffect, useState } from "react";
 
 const StudentSummary = ({setPreview, setStep, formData, formDatas,setFormDatas }) => {
-
   const handlePrevious = ()=>{
     setPreview(false)
     setStep(2)
@@ -17,7 +16,6 @@ const StudentSummary = ({setPreview, setStep, formData, formDatas,setFormDatas }
   const navigate = useNavigate()
   const [studentRegistration, {isLoading}] = useStudentRegistrationMutation()
 const dispatch = useDispatch()
-
 
   const redirect = '/guardian_registration'
 

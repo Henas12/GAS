@@ -36,7 +36,7 @@ import MultiStepForm from './views/ui/Form';
 import GuardianForm from './views/ui/GuardianForm';
 import Students from './views/ui/Students';
 import Apps from './views/ui/Apps';
-import StaffBase from './App';
+import StaffBase from './StaffBase';
 import Guardians from './views/ui/Guardians';
 import Guardian from './views/ui/Guardian';
 import Mystudents from './views/ui/MyStudent';
@@ -45,7 +45,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import New from './views/ui/new';
 import AdminRoute from './utils/AdminRoute';
-
+import Profile from './views/ui/Profile';
 
 
 const router = createBrowserRouter(
@@ -83,7 +83,9 @@ const router = createBrowserRouter(
 
 <Route path='/' element={<StaffBase />}> 
 <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} /> 
+<Route path='/mykid/:id' element={<Mystudents />} /> 
 
+<Route path='/profile' element={<Profile />} /> 
 <Route path='/test' element={<Test />} /> 
 </Route>
    

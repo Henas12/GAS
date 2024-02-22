@@ -39,43 +39,25 @@ const GuardianForm = () => {
           guardianFormDatas.append( 'first_name',guardianFormData.first_name)
             guardianFormDatas.append('last_name', guardianFormData.last_name)
             guardianFormDatas.append('phone_number', guardianFormData.phone_number)
-                guardianFormDatas.append('relationship', guardianFormData.relationship)
-          
+                guardianFormDatas.append('relationship', guardianFormData.relationship)   
       }
-  
-
-  
-  
-  
   const [newGuardian, setNewGuardian] = useState(false);
   const [refetchs, setRefetchs] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const webcamRef = useRef(null);
-
-
-
-  
   const handleRegisterGuardians=()=>{
     setNewGuardian(true)
-    
   }
-
-
   const handleNext = () => {
-    
     if (validateStep()) {
         if(guardianFormDatas)
         {
         setPreview(true)    
         }
-      
-   
     } else {
       toast.error('Please fill all the required fields correctly before proceeding.');
     }
   };
-
-;
 
  
 

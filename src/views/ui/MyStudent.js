@@ -13,98 +13,94 @@ import {
   } from "reactstrap";
   import { useNavigate } from 'react-router-dom';
   import Loader from "../../layouts/loader/Loader";
-  import Blog from "../../components/dashboard/Blog";
-  import bg1 from "../../assets/images/bg/bg1.jpg";
-  import bg2 from "../../assets/images/bg/bg2.jpg";
-  import bg3 from "../../assets/images/bg/bg3.jpg";
-  import bg4 from "../../assets/images/bg/bg4.jpg";
+  import { FaArrowLeft } from 'react-icons/fa';
   import { useCreateLogMutation } from '../../slices/guardiansApiSlice';
-  const BlogData = [
-    {
-      image: bg1,
-      title: "This is simple blog",
-      subtitle: "2 comments, 1 Like",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content.",
-      btnbg: "primary",
-    },
-    {
-      image: bg2,
-      title: "Lets be simple blog",
-      subtitle: "2 comments, 1 Like",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content.",
-      btnbg: "primary",
-    },
-    {
-      image: bg3,
-      title: "Don't Lamp blog",
-      subtitle: "2 comments, 1 Like",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content.",
-      btnbg: "primary",
-    },
-    {
-      image: bg4,
-      title: "Simple is beautiful",
-      subtitle: "2 comments, 1 Like",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content.",
-      btnbg: "primary",
-    },
-  ];
+import { toast } from 'react-toastify';
+import { useGetSingleGuardianQuery } from '../../slices/guardiansApiSlice';
+  import { useParams } from 'react-router-dom';
+  
   
 
 function Mystudents() {
+
   const cardstyle = {
-    backgroundColor: 'lightgray',
-    boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.2)'
+    
+    boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.8)'
   }
+  const { id: guardianId } = useParams();
+  const {data, isLoading:guardianIsLoading, error, refetch} = useGetSingleGuardianQuery(guardianId)
+
+
 
   const navigate = useNavigate()
   const { myData } = useMyContext();
 console.log(myData)
 const [createLog, {isLoading}] = useCreateLogMutation()
 
+const handleClick = () => {
+  window.history.back();
+  
+ 
+};
 
 const logHandler =async(studentId)=>{
-  let mydata= {"guardian_id":myData.id,
+  let mydata= {"guardian_id":guardianId,
                "student_id":studentId
   }
    
      const res = await createLog(mydata)
+     toast.success(res?.data?.message)
+     refetch()
      console.log(res)
 }
 
 
   return (
     <>
-  <Card>
+ { guardianIsLoading ? (
 
-   
-  <Row>
-     
-        <h1 className="mb-5 mt-3 text-center">Students</h1>
-    
-      {myData.students.map((student, index) => (
-        <Col md="6" lg="4" key={student.id}>
-          {isLoading ? (
             <Loader />
-          ) : (
-            <Card style={cardstyle}>
-              <CardImg alt="Card image cap" src={student.image} style={{ width: '100%', height: '250px' }} />
-              <CardBody className="p-4">
-                <CardTitle tag="h5">{student.first_name} {student.last_name}</CardTitle>
-                <CardSubtitle>{student.class_name}</CardSubtitle>
-                <Button color='primary' onClick={() => logHandler(student.id)}>Take</Button>
-              </CardBody>
-            </Card>
-          )}
-        </Col>
-      ))}
-    </Row>
-  <Button onClick={()=>navigate('/home')}>Go Back</Button>
-    </Card>
+          ) : (<Card>
+
+{/* <div onClick={handleClick} style={{ cursor: 'pointer' }}>
+      <FaArrowLeft style={{ color: 'blue', fontSize: '24px' }} />
+    </div> */}
+            <Row>
+               
+                  <h1 className="mb-5 mt-3 text-center">Students</h1>
+                {data.students.map((student, index) => (
+                  <Col   md="6" lg="4" key={student.id} style={{ paddingLeft: '40px' }}>
+                    {isLoading|| guardianIsLoading ? (
+                      <Loader />
+                    ) : (
+                      <Card style={cardstyle}>
+                    
+                        <CardImg alt="Card image cap" src={student.image} style={{ width: '100%', height: '250px' }} />
+                        <CardBody className="p-4">
+                          <CardTitle tag="h5">Full Name: {student.first_name} {student.last_name}</CardTitle>
+                          <CardSubtitle>Grade: {student.grade}        </CardSubtitle>
+                          
+                          { student.is_present &&<Button color='primary' onClick={() => logHandler(student.id)}>Take</Button>}
+                        </CardBody>
+          
+                      </Card>
+                    )}
+                  </Col>
+
+                ))}
+
+                
+                
+
+
+              </Row>
+              <div style={{display:'flex', justifyContent:'center'}}>
+              <Button color='primary' onClick={()=>navigate('/home')} style={{width:"200px", height:"60px"}}>   <FaArrowLeft style={{  fontSize: '24px' }} /> Go Back</Button>
+</div>
+              </Card>)}
+
+
+  
     
     </>
   );
