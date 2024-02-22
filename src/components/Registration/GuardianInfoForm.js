@@ -110,6 +110,36 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             />
             {formErrors.username && <Alert variant="danger">{formErrors.username}</Alert>}
             </Form.Group>
+
+
+
+
+
+
+
+            
+            <Form.Group controlId="gender">
+            <Form.Label>Gender</Form.Label>
+            <Form.Control as="select" name="gender" value={formData.gender} onChange={handleGuadianInputChange}>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            </Form.Control>
+            {formErrors.gender && <Alert variant="danger">{formErrors.gender}</Alert>}
+            </Form.Group>
+            
+            <Form.Group controlId="formBirthDate">
+            <Form.Label>Birth Date</Form.Label>
+            <Form.Control
+            type="date"
+            name="birthDate"
+            value={formData.birthDate}
+            onChange={handleGuadianInputChange}
+            />
+            {formErrors.birthDate && <Alert variant="danger">{formErrors.birthDate}</Alert>}
+            </Form.Group>
+
+
             <Form.Group controlId="relation">
             <Form.Label>Relation</Form.Label>
             <Form.Control as="select" name="relationship" value={formData.relationship} onChange={handleGuadianInputChange}>
@@ -122,7 +152,7 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             {formErrors.relationship && <Alert variant="danger">{formErrors.relationship}</Alert>}
             </Form.Group>
             <Form.Group controlId="phoneNumber">
-            <Form.Label>phoneNumber</Form.Label>
+            <Form.Label>Phone Number</Form.Label>
             <Form.Control
             type="number"
             name="phone_number"
@@ -131,6 +161,23 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             />
             {formErrors.phone_number && <Alert variant="danger">{formErrors.phone_number}</Alert>}
             </Form.Group>
+
+
+
+            <Form.Group controlId="address">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleGuadianInputChange}
+            />
+            {formErrors.address && <Alert variant="danger">{formErrors.address}</Alert>}
+            </Form.Group>
+
+
+
+
             <Button variant="primary" onClick={checkInput}>
        Capture Image
      </Button>

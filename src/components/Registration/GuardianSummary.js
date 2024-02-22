@@ -23,14 +23,12 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
     try {
 
       let valuesList = [];
-
-      // Iterate over FormData entries
       for (const [key, value] of guardianFormDatas.entries()) {
         valuesList.push(value);
       }
       
-      // Now valuesList contains all the values from the FormData object
       console.log(valuesList);
+      console.log(guardianFormDatas);
 
 
 
@@ -46,12 +44,17 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
         last_name : '',
         phone_number : '',
         relationship : '',
+        gender : '',
+        birthDate: '',
+        address: '',
+    
       };
       setGuardianFormData(initialFormData)
       toast.success('Guardian is Registered')
      
    
     } catch (err) {
+      toast.error(err?.detail) 
       toast.error(err?.data?.message || err.error);
     }
 
@@ -112,11 +115,34 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
        
            
           </tr>
+        
+
+
           <tr  className="border-top">
             <td>
              Phone Number
             </td>
             <td>{guardianFormData.phone_number}</td>
+       
+           
+          </tr>
+
+
+          <tr  className="border-top">
+            <td>
+             Gender
+            </td>
+            <td>{guardianFormData.gender}</td>
+       
+           
+          </tr>
+
+
+          <tr  className="border-top">
+            <td>
+             Birth Date
+            </td>
+            <td>{guardianFormData.birthDate}</td>
        
            
           </tr>
@@ -131,7 +157,14 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
            
           </tr>
    
-
+          <tr  className="border-top">
+            <td>
+             Address
+            </td>
+            <td>{guardianFormData.address}</td>
+       
+           
+          </tr>
     
           <tr  className="border-top">
           <td>Image</td>
