@@ -134,7 +134,7 @@ Information
             {/* {formErrors.address && <Alert variant="danger">{formErrors.address}</Alert>} */}
             </Form.Group>
             <Button variant="primary" onClick={Updata}>
-    Updata Information
+    Update Information
      </Button>
    
    

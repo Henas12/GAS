@@ -40,7 +40,9 @@ const MultiStepForm = () => {
      
           formDatas.append('last_name', formData.lastName)
             formDatas.append('date_of_birth', formData.birthDate)
-              formDatas.append('class_name', formData.grade)
+              formDatas.append('grade', formData.grade)
+              formDatas.append('gender', formData.gender)
+
               formDatas.append('image', blob, 'image.jpg');
   
       

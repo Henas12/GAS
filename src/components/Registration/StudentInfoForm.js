@@ -55,9 +55,19 @@ const StudentInfoForm = ({ formData, formErrors, handleInputChange }) => (
             <Form.Label>Grade</Form.Label>
             <Form.Control as="select" name="grade" value={formData.grade} onChange={handleInputChange}>
             <option value="">Select Grade</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            {/* Add other grade options */}
+            <option value="Nursery">Nursery</option>
+      <option value="KG">KG</option>
+      <option value="LKG">LKG</option>
+      <option value="1">1st Grade</option>
+      <option value="2">2nd Grade</option>
+      <option value="3">3rd Grade</option>
+      <option value="4">4th Grade</option>
+      <option value="5">5th Grade</option>
+      <option value="6">6th Grade</option>
+      <option value="7">7th Grade</option>
+
+      <option value="8">8th Grade</option>
+
             </Form.Control>
             {formErrors.grade && <Alert variant="danger">{formErrors.grade}</Alert>}
             </Form.Group>

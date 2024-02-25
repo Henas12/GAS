@@ -27,11 +27,21 @@ const dispatch = useDispatch()
 
   const registerStudent  =async()=>{
     try {
+      
+      let valuesList = [];
+      for (const [key, value] of formDatas.entries()) {
+        valuesList.push(value);
+      }
+      
+      console.log(valuesList);
+      
+      
       const res = await studentRegistration(formDatas).unwrap();
       setPreview(false)
       setFormDatas(new FormData());
       // dispatch( setStudent({ ...res}));
       // dispatch( setStudent({ ...data}));
+
   toast.success('Student is Registered')
       navigate(`/${res.id}${redirect}`)
 
@@ -52,7 +62,7 @@ const dispatch = useDispatch()
   <CardBody>
     <CardTitle tag="h5">Review</CardTitle>
     <CardSubtitle className="mb-2 text-muted" tag="h6">
-      Review User Information Before Proceeding
+      Review Student Information Before Proceeding
     </CardSubtitle>
 
     <Table className="no-wrap mt-3 align-middle" responsive borderless>
@@ -79,6 +89,16 @@ const dispatch = useDispatch()
        
            
           </tr>
+          
+          <tr  className="border-top">
+            <td>
+             Grade
+            </td>
+            <td>{formData.grade}</td>
+       
+           
+          </tr>
+
 
           <tr  className="border-top">
             <td>
@@ -97,10 +117,9 @@ const dispatch = useDispatch()
               <div className="d-flex align-items-center p-2">
                 <img
                   src={formData.image}
-                  className="rounded-circle"
                   alt="avatar"
-                  width="60"
-                  height="100"
+                  width="100"
+                  height="150"
                 />
                 
               </div>

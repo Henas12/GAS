@@ -22,10 +22,9 @@ if (data && !isLoading){
     formData.firstName = data.first_name
     formData.lastName = data.last_name
     formData.birthDate = data.date_of_birth
-    formData.grade = data.class_name
+    formData.grade = data.grade
     formData.image = data.image 
-    // formData.gender = "male"
-   
+    formData.gender = data.gender
  
 }
 }, [isLoading,data ])
@@ -40,16 +39,14 @@ if (data && !isLoading){
        "image":data.image,
         "last_name": formData.lastName,
         "date_of_birth": formData.birthDate,
-        "class_name": formData.grade,
-        
-      
+        "grade": formData.grade,
+        "gender": formData.gender,
       }
 
         try{
-          console.log(dataToSend)
+          console.log(dataToSend,'4')
             const res =  await updateStudent({studentId,dataToSend})
             console.log(res)
-            refetch()
             toast.success('Information Updated')
         }
         catch(error){
@@ -123,15 +120,27 @@ if (data && !isLoading){
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
-          <option value="other">Other</option>
           </Form.Control>
           </Form.Group>
+
+    
+
+
           <Form.Group className='mb-3' controlId="formGrade">
           <Form.Label>Grade</Form.Label>
-          <Form.Control as="select" name="grade" value={formData.grade} onChange={handleInputChange} >
+          <Form.Control as="select" name="grade" value={formData.grade || data.grade} onChange={handleInputChange} >
           <option value="">Select Grade</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
+      <option value="Nursery">Nursery</option>
+      <option value="KG">KG</option>
+      <option value="LKG">LKG</option>
+      <option value="1">1st Grade</option>
+      <option value="2">2nd Grade</option>
+      <option value="3">3rd Grade</option>
+      <option value="4">4th Grade</option>
+      <option value="5">5th Grade</option>
+      <option value="6">6th Grade</option>
+      <option value="7">7th Grade</option>
+      <option value="8">8th Grade</option>
           {/* Add other grade options */}
           </Form.Control>
           </Form.Group>

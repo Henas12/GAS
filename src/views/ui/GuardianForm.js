@@ -9,13 +9,10 @@ import GuardianInfoForm from '../../components/Registration/GuardianInfoForm';
 import image from './kids-walking.jpg';
 import GuardianSummary from '../../components/Registration/GuardianSummary';
 import { toast } from 'react-toastify';
-
 const GuardianForm = () => {
   const [step, setStep] = useState(1);
   const[preview, setPreview] = useState(false)
   const [guardianFormDatas, setGuardianFormDatas] = useState(new FormData());
-
-
   const [guardianFormData, setGuardianFormData] = useState({
     username : '',
     image : null,
@@ -26,17 +23,10 @@ const GuardianForm = () => {
     gender : '',
     birthDate: '',
     address: '',
-
-
-
   });
-
     const handleGuardianImage = async () => {
- 
       const imageSrc = webcamRef.current.getScreenshot();
       setGuardianFormData({ ...guardianFormData, image: imageSrc });
-       
-  
       const response = await fetch(imageSrc);
           const blob = await response.blob();
           guardianFormDatas.append('username', guardianFormData.username)
@@ -45,7 +35,7 @@ const GuardianForm = () => {
           guardianFormDatas.append('last_name', guardianFormData.last_name)
           guardianFormDatas.append('phone_number', guardianFormData.phone_number)
           guardianFormDatas.append('relationship', guardianFormData.relationship)
-          // guardianFormDatas.append('gender', guardianFormData.gender)
+          guardianFormDatas.append('gender', guardianFormData.gender)
           guardianFormDatas.append('date_of_birth', guardianFormData.birthDate)
           guardianFormDatas.append('address', guardianFormData.address)
       }

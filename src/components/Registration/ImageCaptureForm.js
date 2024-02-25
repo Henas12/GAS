@@ -15,7 +15,7 @@ const ImageCaptureForm = ({ formData, handleCaptureImage, handleNext, webcamRef}
         style={{ height: '400px', width: '400px' }}
       />
       <Button variant="primary" onClick={() => { handleCaptureImage() }}>
-        Capture Image & Next
+        Capture Image
       </Button>
 
       

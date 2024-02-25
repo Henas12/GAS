@@ -125,7 +125,7 @@ if (data && !isLoading){
             <option value="">Select Relation</option>
             <option value="father">Father</option>
             <option value="mother">Mother</option>
-            <option value="sibiling">Sibiling</option>
+            
             <option value="other">Other</option>
             </Form.Control>
             </Form.Group>
