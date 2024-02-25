@@ -54,8 +54,9 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
      
    
     } catch (err) {
+      
       toast.error(err?.detail) 
-      toast.error(err?.data?.message || err.error);
+      toast.error(err?.data?.message || (err.data?.username?err.data?.username[0]:`${err?.data?.detail}`));
     }
 
   
@@ -172,10 +173,9 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
               <div className="d-flex align-items-center p-2">
                 <img
                   src={guardianFormData.image}
-                  className="rounded-circle"
                   alt="avatar"
-                  width="60"
-                  height="100"
+                  width="100"
+                  height="150"
                 />
                 
               </div>

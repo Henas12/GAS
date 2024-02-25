@@ -19,7 +19,6 @@ import { toast } from 'react-toastify';
 import { useGetSingleGuardianQuery } from '../../slices/guardiansApiSlice';
   import { useParams } from 'react-router-dom';
   
-  
 
 function Mystudents() {
 
@@ -28,6 +27,7 @@ function Mystudents() {
     boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.8)'
   }
   const { id: guardianId } = useParams();
+  console.log(guardianId)
   const {data, isLoading:guardianIsLoading, error, refetch} = useGetSingleGuardianQuery(guardianId)
 
 

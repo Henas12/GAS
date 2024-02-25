@@ -125,11 +125,11 @@ const GuardianForm = () => {
         valid = false;
       }
       if (guardianFormData.birthDate.trim() === '') {
-        errors.birthDate = 'Relationship is required';
+        errors.birthDate = 'Birth Date is required';
         valid = false;
       }
           if (guardianFormData.address.trim() === '') {
-        errors.address = 'Relationship is required';
+        errors.address = 'Address is required';
         valid = false;
       }
       

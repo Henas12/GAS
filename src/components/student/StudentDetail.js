@@ -36,7 +36,6 @@ if (data && !isLoading){
       const  updateHandler = async()=>{
         const dataToSend = {
        "first_name": formData.firstName,
-       "image":data.image,
         "last_name": formData.lastName,
         "date_of_birth": formData.birthDate,
         "grade": formData.grade,
@@ -44,10 +43,11 @@ if (data && !isLoading){
       }
 
         try{
-          console.log(dataToSend,'4')
+          
             const res =  await updateStudent({studentId,dataToSend})
-            console.log(res)
+    
             toast.success('Information Updated')
+            refetch()
         }
         catch(error){
             toast.error(error?.data)
@@ -118,8 +118,8 @@ if (data && !isLoading){
           <Form.Label>Gender</Form.Label>
           <Form.Control as="select" name="gender" value={formData.gender || data.gender}  onChange={handleInputChange}>
           <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
           </Form.Control>
           </Form.Group>
 
@@ -147,7 +147,7 @@ if (data && !isLoading){
     
           <div className="d-grid mt-3">
                             <Button className='mt-3' onClick={updateHandler} variant="primary" type="submit">
-                             update Student
+                             Update Student
                             </Button>
                           </div>
                   </Form>

@@ -19,7 +19,7 @@ keepUnusedDataFor:5
   updateStudent:  builder.mutation({
     query: ({studentId,dataToSend}) => ({
       url: `${BASE_URL}/students/${studentId}/`,
-      method: 'PUT',  
+      method: 'PATCH',  
       body:dataToSend,
 }),
 }),

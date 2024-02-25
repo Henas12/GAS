@@ -107,9 +107,15 @@ const dispatch = useDispatch()
             <td>{formData.birthDate}</td>
        
            
-          </tr>
-   
+            </tr>
 
+          <tr  className="border-top">
+            <td>
+             Gender
+            </td>
+            <td>{formData.gender}</td>
+   
+            </tr>
     
           <tr  className="border-top">
           <td>Image</td>

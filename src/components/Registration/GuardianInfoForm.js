@@ -122,8 +122,8 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
             <Form.Label>Gender</Form.Label>
             <Form.Control as="select" name="gender" value={formData.gender} onChange={handleGuadianInputChange}>
             <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
             </Form.Control>
             {formErrors.gender && <Alert variant="danger">{formErrors.gender}</Alert>}
             </Form.Group>

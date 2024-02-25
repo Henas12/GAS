@@ -20,23 +20,18 @@ export default function GuardianSummary({setGuardianPreview, setStep, guardianFo
 
   const registerStudent  =async()=>{
     try {
-     
-      
       let valuesList = [];
-
       // Iterate over FormData entries
       for (const [key, value] of guardianFormDatas.entries()) {
         valuesList.push(value);
       }
-      
       // Now valuesList contains all the values from the FormData object
       console.log(valuesList);
-
       const res = await guardianRegistration(guardianFormDatas).unwrap();
       console.log('Backend response:', res);
       setGuardianPreview(false)
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      toast.error(err?.data?.message || err.error || err?.data?.detail );
     }
 
   
@@ -103,7 +98,7 @@ export default function GuardianSummary({setGuardianPreview, setStep, guardianFo
 
           <tr  className="border-top">
             <td>
-            Relationshipr
+            Relationship
             </td>
             <td>{guardianFormData.relationship}</td>
        
@@ -118,7 +113,7 @@ export default function GuardianSummary({setGuardianPreview, setStep, guardianFo
               <div className="d-flex align-items-center p-2">
                 <img
                   src={guardianFormData.image}
-                  className="rounded-circle"
+                  
                   alt="avatar"
                   width="60"
                   height="100"

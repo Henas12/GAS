@@ -31,14 +31,15 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    // let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Authorization':  `Bearer ${ data.access}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // const userInfo = await response1.json();
+    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      method: 'GET',
+      headers: {
+        'Authorization':  `Bearer ${ data.access}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const userInfo = await response1.json();
+    console.log(userInfo)
     
  
     if (response.status === 200) {

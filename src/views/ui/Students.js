@@ -12,19 +12,8 @@ import { useDeleteSudentMutation } from "../../slices/studentApiSlice";
 import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
 import {  Modal } from 'react-bootstrap';
-const studentss = [
-  {
-    id:'1',
-    image: user1,
-    first_name: "Hanna",
-    last_name:" Gover",
-    class_name: "2A",
-    
-  },
 
 
-  
-];
 
 
 const Students = () => {
@@ -77,7 +66,7 @@ isLoading? (<Loader/>) : (
         <thead>
           <tr>
             <th>Student Profile</th>
-            <th>Class</th>
+            <th>Grade</th>
 
             <th>Detail</th>
             <th>Dismiss</th>
@@ -107,7 +96,7 @@ isLoading? (<Loader/>) : (
                   
                 </div>
               </td>
-              <td>{student.class_name}</td>
+              <td>{student.grade}</td>
               
               
               <td><Button onClick={()=> navigate(`/students/${student.id}`)} className="btn" color="info">
