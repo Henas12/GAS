@@ -10,7 +10,8 @@ import {
   Table
 } from "reactstrap";
 import Feeds from '../dashboard/Feeds';
-
+import { BASE_URL } from '../../constants';
+import { useLogsQuery } from '../../slices/studentApiSlice';
 import {  Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetGuardiansQuery, useRemoveGuardianMutation } from '../../slices/guardiansApiSlice';
@@ -19,17 +20,6 @@ import Loader from '../../layouts/loader/Loader';
 import {toast} from 'react-toastify'
 import { useGetSingleStudentQuery } from '../../slices/studentApiSlice';
 
-
-const tableData = [
-  {
-    user_image: user1,
-    first_name: "Hanna Gover",
-    last_name: "hgover",
-    username: " React",
-    relationship: "pending",
- 
-  }
-];
 
 
 
@@ -40,6 +30,7 @@ function GuardiansList() {
   const[reomveGuardian, {isLoading:reomveGuardianIsLoading}] =useRemoveGuardianMutation()
 
   const {data, isLoading, error, refetch} = useGetGuardiansQuery(studentId)
+
   const handleShowConfirmation = (guardianId) => {
     setId(guardianId)
     setShowConfirmation(true);
@@ -66,14 +57,6 @@ function GuardiansList() {
 const navigate = useNavigate()
 
 
-useEffect(()=>{
-  if(data){
-  
-    console.log(data)
-  }
-  
-  },[data])
-  
 
   return (
 
@@ -116,7 +99,7 @@ useEffect(()=>{
                       <img
                       // src={`http://10.42.0.61:8000${guardian?.user_photo}`}
                       
-                      src={`http://localhost:8000${guardian?.user_photo}`}
+                      src={`${BASE_URL}${guardian?.user_photo}`}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"

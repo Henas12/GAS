@@ -10,8 +10,6 @@ import {
   Table,
   
 } from "reactstrap";
-
-import Feeds from '../dashboard/Feeds';
 import image from './kids-walking.jpg';
 import {  Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +19,7 @@ import user1 from "../../assets/images/users/user1.jpg";
 import Loader from '../../layouts/loader/Loader';
 import {toast} from 'react-toastify'
 import{Image} from'react-bootstrap'
+import { BASE_URL } from '../../constants';
 
 const tableData = [
   {
@@ -125,7 +124,7 @@ useEffect(()=>{
                     <div className="d-flex align-items-center p-2">
                       <img
                       
-                      src={`http://localhost:8000${guardian.user_photo}`}
+                      src={`${BASE_URL}${guardian.user_photo}`}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"

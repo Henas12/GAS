@@ -52,7 +52,7 @@ keepUnusedDataFor:5
 updateGuardian:  builder.mutation({
   query: ({guardianId,dataToSend}) => ({
     url: `${BASE_URL}/guardians/${guardianId}/`,
-    method: 'PUT',  
+    method: 'PATCH',  
     body:dataToSend,
 }),
 }),
@@ -70,6 +70,8 @@ url:`${BASE_URL}/guardians/${guardianId}/students/${id}/`,
 method: 'DELETE',
 })
 }),
+
+
   })
 })
 export const { useAllGuardiansQuery,useGetGuardiansQuery, 

@@ -20,7 +20,6 @@ import {
 // import 'bootstrap/dist/css/bootstrap.css';
 
 import { Provider } from 'react-redux';
-import About from './views/About';
 import Alerts from './views/ui/Alerts';
 import Badges from './views/ui/Badges';
 import Buttons from './views/ui/Buttons';
@@ -46,12 +45,13 @@ import { AuthProvider } from './context/AuthContext';
 import New from './views/ui/new';
 import AdminRoute from './utils/AdminRoute';
 import Profile from './views/ui/Profile';
-
+import Attendance from './views/ui/Attendance';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
           <Route path='/' element={<App />}>
+          <Route path='/' element={<Starter />} /> 
             <Route path='/students/:id' element={<Student />} /> 
             <Route path='/:id/guardian_registration' element={<GuardianForm />} /> 
             <Route path='/students' element={<Students />} /> 
@@ -62,8 +62,8 @@ const router = createBrowserRouter(
            
             <Route path='/mykid' element={<Mystudents />} /> 
            
-            <Route path='/starter' element={<Starter />} /> 
-            <Route path='/about' element={<About />} /> 
+           
+            <Route path='/attendance' element={<Attendance />} /> 
             <Route path='/badges' element={<Badges />} /> 
             <Route path='/buttons' element={<Buttons />} /> 
             <Route path='/cards' element={<Cards />} /> 
@@ -78,12 +78,12 @@ const router = createBrowserRouter(
           <Route path='/' element={<New />}> 
         
           <Route path='/staff-login' element={<Login />} /> 
-          <Route path='/test' element={<Test />} /> 
           </Route>
 
 <Route path='/' element={<StaffBase />}> 
 <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} /> 
 <Route path='/mykid/:id' element={<Mystudents />} /> 
+<Route path='/staff/attedance/' element={<Attendance />} /> 
 
 <Route path='/profile' element={<Profile />} /> 
 <Route path='/test' element={<Test />} /> 

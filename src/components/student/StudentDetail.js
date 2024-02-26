@@ -58,10 +58,6 @@ if (data && !isLoading){
     (isLoading? <Loader/> : formData?
     (   updateLoaing? <Loader/>:
     <Row>
-
-
-
-
     <Col xs="12" md="6">
          <Card>
    
@@ -113,6 +109,7 @@ if (data && !isLoading){
           onChange={handleInputChange}
           required
           />
+          
           </Form.Group>
           <Form.Group controlId="formGender">
           <Form.Label>Gender</Form.Label>
@@ -122,10 +119,6 @@ if (data && !isLoading){
           <option value="Female">Female</option>
           </Form.Control>
           </Form.Group>
-
-    
-
-
           <Form.Group className='mb-3' controlId="formGrade">
           <Form.Label>Grade</Form.Label>
           <Form.Control as="select" name="grade" value={formData.grade || data.grade} onChange={handleInputChange} >
@@ -141,7 +134,6 @@ if (data && !isLoading){
       <option value="6">6th Grade</option>
       <option value="7">7th Grade</option>
       <option value="8">8th Grade</option>
-          {/* Add other grade options */}
           </Form.Control>
           </Form.Group>
     

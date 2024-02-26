@@ -17,18 +17,23 @@ const [formData, setFormData] = useState({
   last_name : '',
   phone_number : '',
   relationship : '',
+  address : '',
+  gender : '',
+  birthDate : '',
+
   });
 useEffect(()=>{
 if (data && !isLoading){
+  console.log(data)
     formData.first_name = data.first_name
     formData.last_name = data.last_name
     formData.phone_number = data.phone_number
     formData.relationship = data.relationship
     formData.image = data.image 
     formData.username = data.username
-    // formData.gender = "male"
-   
- 
+    formData.birthDate = data.date_of_birth
+    formData.address = data.address
+    formData.gender = data.gender 
 }
 }, [isLoading,data ])
 
@@ -43,7 +48,11 @@ if (data && !isLoading){
         "last_name": formData.last_name,
         "relationship": formData.relationship,
         "phone_number": formData.phone_number,
-        "username": formData.username
+         "date_of_birth": formData.birthDate,
+         "address": formData.address,
+    "gender" : formData.gender
+
+ 
       
       }
 
@@ -70,7 +79,7 @@ if (data && !isLoading){
          <Card>
    
         <CardTitle tag="h2" className="border-bottom p-3 mb-0">
-          Student Info
+          Guardian Info
         </CardTitle>
 
        
@@ -125,6 +134,7 @@ if (data && !isLoading){
             <option value="">Select Relation</option>
             <option value="father">Father</option>
             <option value="mother">Mother</option>
+            <option value="sibiling">Sibiling</option>
             
             <option value="other">Other</option>
             </Form.Control>
@@ -139,10 +149,40 @@ if (data && !isLoading){
             onChange={handleInputChange}
             />
             </Form.Group>
-    
+
+            <Form.Group controlId="birthDate">
+            <Form.Label>Birth Date</Form.Label>
+            <Form.Control
+            type="date"
+            name="birthDate"
+            value={formData.birthDate||data.date_of_birth}
+            onChange={handleInputChange}
+            />
+            </Form.Group>
+
+
+            <Form.Group controlId="address">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+            type="text"
+            name="address"
+            value={formData.address||data.address}
+            onChange={handleInputChange}
+            />
+            </Form.Group>
+
+
+            <Form.Group controlId="formGender">
+          <Form.Label>Gender</Form.Label>
+          <Form.Control as="select" name="gender" value={formData.gender || data.gender}  onChange={handleInputChange}>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          </Form.Control>
+          </Form.Group>
           <div className="d-grid mt-3">
                             <Button className='mt-3' onClick={updateHandler} variant="primary" type="submit">
-                             update Guardian
+                             Update Guardian
                             </Button>
                           </div>
                   </Form>

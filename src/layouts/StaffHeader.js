@@ -19,8 +19,6 @@ import { ReactComponent as LogoWhite } from "../assets/images/logos/xtremelogowh
 import user1 from "../assets/images/users/user1.jpg";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate()
@@ -72,6 +70,13 @@ const Header = () => {
               Home
             </Link>
           </NavItem>
+          <NavItem>
+            <Link to="/staff/attedance" className="nav-link" style={{color:"white", fontSize:'20px'}}>
+              Attendance
+            </Link>
+          </NavItem>
+
+         
         </Nav>
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle color="transparent">

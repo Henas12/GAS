@@ -34,7 +34,12 @@ deleteSudent: builder.mutation({
 
 
 
-
+logs:builder.query({
+  query:(studentId)=>({
+  url: `${BASE_URL}/students/${studentId}/logs/`, 
+  }),
+  keepUnusedDataFor:5
+}),
 
 
 })
@@ -42,4 +47,4 @@ deleteSudent: builder.mutation({
 
 export const { useGetStudentsQuery, useGetSingleStudentQuery, 
   useUpdateStudentMutation, useDeleteSudentMutation,
-  } = studentApiSlice;
+  useLogsQuery} = studentApiSlice;

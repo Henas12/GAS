@@ -57,11 +57,11 @@ const SalesChart = () => {
   };
   const series = [
     {
-      name: "2020",
+      name: "2022",
       data: [20, 40, 50, 30, 40, 50, 30, 30, 40],
     },
     {
-      name: "2022",
+      name: "2023",
       data: [10, 20, 40, 60, 20, 40, 60, 60, 20],
     },
   ];
@@ -69,9 +69,9 @@ const SalesChart = () => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Sales Summary</CardTitle>
+        <CardTitle tag="h5">Total Active Students</CardTitle>
         <CardSubtitle className="text-muted" tag="h6">
-          Yearly Sales Report
+          Over The Past Two Years
         </CardSubtitle>
         <Chart options={options} series={series} type="bar" height="379" />
       </CardBody>

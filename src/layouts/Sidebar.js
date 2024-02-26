@@ -13,11 +13,7 @@ const navigation = [
     href: "/students",
     icon: "bi bi-people-fill",
   },
-  {
-    title: "Badges",
-    href: "/badges",
-    icon: "bi bi-patch-check",
-  },
+ 
 
 
   {
@@ -32,8 +28,8 @@ const navigation = [
   },
 
   {
-    title: "About",
-    href: "/about",
+    title: "Attendance",
+    href: "/attendance",
     icon: "bi bi-people",
   },
 ];

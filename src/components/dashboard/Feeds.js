@@ -1,4 +1,5 @@
 import React from "react";
+import Loader from "../../layouts/loader/Loader";
 import {
   Card,
   CardBody,
@@ -8,7 +9,10 @@ import {
   ListGroupItem,
   Button,
 } from "reactstrap";
-
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useLogsQuery } from "../../slices/studentApiSlice";
+import TimeAgo from "../student/TimeCaculated";
 const FeedData = [
   {
     title: "Cras justo odio",
@@ -49,15 +53,27 @@ const FeedData = [
 ];
 
 const Feeds = () => {
+  const { id: studentId } = useParams();
+  const {data, isLoading, error, refetch} = useLogsQuery(studentId)
+
+
+ 
+
+  
+    
+  
   return (
+    isLoading? <Loader/>:
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Feeds</CardTitle>
-        <CardSubtitle className="mb-2 text-muted" tag="h6">
-          Widget you can use
-        </CardSubtitle>
+        
         <ListGroup flush className="mt-4">
-          {FeedData.map((feed, index) => (
+          {data.map((feed, index) => (
+            
+        
+              
+            
+            
             <ListGroupItem
               key={index}
               action
@@ -68,13 +84,24 @@ const Feeds = () => {
               <Button
                 className="rounded-circle me-3"
                 size="sm"
-                color={feed.color}
+                color="danger"
               >
-                <i className={feed.icon}></i>
+                <i className="bi bi-hdd"></i>
               </Button>
-              {feed.title}
+              <div style={{disply:"flex"}}>
+                <div>
+               Guardian: <small className="ms-auto text-muted text-small"> @{feed.guardian.username} </small>
+
+                </div>
+<div>
+Staff:<small className="ms-auto text-muted text-small"> @{feed.staff.user.username}</small>
+
+</div>
+              </div>
+              
+         
               <small className="ms-auto text-muted text-small">
-                {feed.date}
+              <TimeAgo dateTime={feed.date_time} />
               </small>
             </ListGroupItem>
           ))}
