@@ -5,39 +5,41 @@ The Guardian Authentication System (GAS) is a comprehensive security solution de
 Installation
 Before installation, ensure you have npm and Python installed on your machine. Follow these steps to set up the project environment:
 
-Backend Setup
-bash
-Copy code
-# Clone the repository
-git clone https://github.com/henas12/GAS.git
+#Backend Setup
+## Clone the repository
+git clone https://github.com/yourusername/GAS.git
 cd GAS/backend
 
-# Create a virtual environment
+## Create a virtual environment
 python -m venv venv
-# Activate the virtual environment
-# On Windows
+## Activate the virtual environment
+## On Windows
 venv\Scripts\activate
-# On Unix or MacOS
+## On Unix or MacOS
 source venv/bin/activate
 
-# Install the dependencies
+## Install the dependencies
 pip install -r requirements.txt
 
-# Run migrations
+## Run migrations
 python manage.py migrate
 
-# Start the Django server
+## Start the Django server
 python manage.py runserver
-Frontend Setup
-bash
-Copy code
-# Navigate to the frontend directory from the project root
+
+
+
+
+# Frontend Setup
+
+
+## Navigate to the frontend directory from the project root
 cd frontend
 
-# Install dependencies
+## Install dependencies
 npm install
 
-# Start the React application
+## Start the React application
 npm start
 Usage
 After installation, the system is ready for use. Guardians can be registered into the system along with their corresponding students. At the time of pick-up or drop-off, the guardian's face is verified through the system to ensure they are authorized to pick up the student. The system logs the details of each transaction for future reference.
