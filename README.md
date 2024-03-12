@@ -1,5 +1,5 @@
-GAS - Guardian Authentication System
-Description
+# GAS - Guardian Authentication System
+## Description
 The Guardian Authentication System (GAS) is a comprehensive security solution designed to enhance the safety of students during critical times of pick-up and drop-off. Developed using React for the frontend and Django for the backend, GAS leverages advanced face recognition technology to verify guardians' identities. This system not only ensures that students are handed over to the correct guardians but also maintains a detailed log of each pick-up and drop-off event, including information on the guardian and the staff member involved. Additionally, GAS features a robust student and guardian registration module alongside an attendance system, providing a holistic approach to student safety and tracking.
 
 Installation
