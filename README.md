@@ -5,7 +5,7 @@ The Guardian Authentication System (GAS) is a comprehensive security solution de
 Installation
 Before installation, ensure you have npm and Python installed on your machine. Follow these steps to set up the project environment:
 
-#Backend Setup
+# Backend Setup
 ## Clone the repository
 git clone https://github.com/yourusername/GAS.git
 cd GAS/backend
