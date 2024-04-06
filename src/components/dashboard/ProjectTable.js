@@ -8,7 +8,7 @@ import user5 from "../../assets/images/users/user5.jpg";
 const tableData = [
   {
     avatar: user1,
-    name: "Hanna Gover",
+    name: "Henok Gover",
     email: "hgover@gmail.com",
     project: "Flexy React",
     status: "pending",
