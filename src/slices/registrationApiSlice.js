@@ -45,10 +45,19 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
         body: data,
         
       }),
-    })
+    }),
 
+
+    video: builder.mutation({
+      query: (data) => ({
+        url: `${BASE_URL}/video/`,
+        method: 'POST',
+        body: data,
+        
+      }),
+    })
 
 
   })
 })
-export const { useStudentRegistrationMutation, useGuardianRegistrationMutation,useGetGuardianQuery, useGuardianFromExistingMutation } = registrationApiSlice;
+export const { useStudentRegistrationMutation, useGuardianRegistrationMutation,useGetGuardianQuery, useGuardianFromExistingMutation, useVideoMutation } = registrationApiSlice;

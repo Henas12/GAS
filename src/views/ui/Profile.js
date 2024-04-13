@@ -12,7 +12,6 @@ import Feeds from '../../components/dashboard/Feeds';
 
 const Profile = () => {
   
-
     const [formData, setFormData] = useState({
         username : '',
         email: '',
@@ -153,7 +152,7 @@ Information
           Reports and Announcemet
         </CardTitle>
         <CardBody className="">
-        <Feeds />
+        {/* <Feeds /> */}
         </CardBody>
       </Card>
     </Col>

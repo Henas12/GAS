@@ -1,16 +1,15 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import {Alert, CardTitle,Col, Button, Row, Image,Container, Card, Form } from 'react-bootstrap';
 import { useGetSingleStudentQuery, useUpdateStudentMutation } from '../../slices/studentApiSlice';
 import {toast} from 'react-toastify'
 import Loader from '../../layouts/loader/Loader';
-import { useNavigate } from 'react-router-dom';
-
-function StudentDetail() {
+function StudentUpdate() {
 const { id: studentId } = useParams();
-
 const {data, isLoading, error, refetch} = useGetSingleStudentQuery(studentId)
+const [updateStudent, {isLoading: updateLoaing}] = useUpdateStudentMutation()
 const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -20,13 +19,47 @@ const [formData, setFormData] = useState({
     image: null,
   });
   const navigate = useNavigate()
+useEffect(()=>{
+if (data && !isLoading){
+    formData.firstName = data.first_name
+    formData.lastName = data.last_name
+    formData.birthDate = data.date_of_birth
+    formData.grade = data.grade
+    formData.image = data.image 
+    formData.gender = data.gender
+ 
+}
+}, [isLoading,data ])
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+      };
+      const  updateHandler = async()=>{
+        const dataToSend = {
+       "first_name": formData.firstName,
+        "last_name": formData.lastName,
+        "date_of_birth": formData.birthDate,
+        "grade": formData.grade,
+        "gender": formData.gender,
+      }
+
+        try{
+          
+            const res =  await updateStudent({studentId,dataToSend})
     
+            toast.success('Information Updated')
+            navigate(`/students/${studentId}`)
+            refetch()
+        }
+        catch(error){
+            toast.error(error?.data)
+        }
+      }
 
-        
   return (
-    (isLoading? <Loader/> :
-    ( 
+    (isLoading? <Loader/> : formData?
+    (   updateLoaing? <Loader/>:
     <Row>
     <Col xs="12" md="6">
          <Card>
@@ -50,9 +83,9 @@ const [formData, setFormData] = useState({
           <Form.Control
           type="text"
           name="firstName"
-          value={data.first_name}
+          value={formData.firstName||data.first_name}
           required
-          disabled
+          onChange={handleInputChange}
           />
           </Form.Group>
           </Col>
@@ -62,9 +95,8 @@ const [formData, setFormData] = useState({
           <Form.Control
           type="text"
           name="lastName"
-          disabled
-          value={data.last_name}
-          
+          value={formData.lastName||data.last_name}
+          onChange={handleInputChange}
           required
           />
           </Form.Group>
@@ -76,15 +108,15 @@ const [formData, setFormData] = useState({
           <Form.Control
           type="date"
           name="birthDate"
-          value={data.date_of_birth}
-          disabled
+          value={formData.birthDate||data.date_of_birth}
+          onChange={handleInputChange}
           required
           />
           
           </Form.Group>
           <Form.Group controlId="formGender">
           <Form.Label>Gender</Form.Label>
-          <Form.Control disabled as="select" name="gender" value={data.gender}  >
+          <Form.Control as="select" name="gender" value={formData.gender || data.gender}  onChange={handleInputChange}>
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -92,7 +124,7 @@ const [formData, setFormData] = useState({
           </Form.Group>
           <Form.Group className='mb-3' controlId="formGrade">
           <Form.Label>Grade</Form.Label>
-          <Form.Control disabled as="select" name="grade" value={data.grade}  >
+          <Form.Control as="select" name="grade" value={formData.grade || data.grade} onChange={handleInputChange} >
           <option value="">Select Grade</option>
       <option value="Nursery">Nursery</option>
       <option value="KG">KG</option>
@@ -109,8 +141,8 @@ const [formData, setFormData] = useState({
           </Form.Group>
     
           <div className="d-grid mt-3">
-                            <Button className='mt-3' onClick={()=>navigate(`/students/update/${studentId}`)} variant="primary">
-                             Update Information
+                            <Button className='mt-3' onClick={updateHandler} variant="primary" type="submit">
+                             Update Student
                             </Button>
                           </div>
                   </Form>
@@ -154,13 +186,13 @@ const [formData, setFormData] = useState({
     
     
     
-      </Row> )
+      </Row> ):
       
-          )
+      (<Loader/>)      )
     
     
 
   )
 }
 
-export default StudentDetail
+export default StudentUpdate

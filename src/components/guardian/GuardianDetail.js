@@ -6,70 +6,21 @@ import {  useGetSingleGuardianQuery, useUpdateGuardianMutation } from '../../sli
 import {toast} from 'react-toastify'
 import Loader from '../../layouts/loader/Loader';
 import StudentList from './StudentsList';
+import { useNavigate } from 'react-router-dom';
 function GuardianDetail() {
 const { id: guardianId } = useParams();
 const {data, isLoading, error, refetch} = useGetSingleGuardianQuery(guardianId)
-const [guardianUpdate, {isLoading: updateLoaing}] = useUpdateGuardianMutation()
-const [formData, setFormData] = useState({
-  username : '',
-  image : null,
-  first_name : '',
-  last_name : '',
-  phone_number : '',
-  relationship : '',
-  address : '',
-  gender : '',
-  birthDate : '',
+const navigate = useNavigate()
 
-  });
-useEffect(()=>{
-if (data && !isLoading){
-  console.log(data)
-    formData.first_name = data.first_name
-    formData.last_name = data.last_name
-    formData.phone_number = data.phone_number
-    formData.relationship = data.relationship
-    formData.image = data.image 
-    formData.username = data.username
-    formData.birthDate = data.date_of_birth
-    formData.address = data.address
-    formData.gender = data.gender 
-}
-}, [isLoading,data ])
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-      };
-      const  updateHandler = async()=>{
-        const dataToSend = {
-       "first_name": formData.first_name,
-       "image":data.image,
-        "last_name": formData.last_name,
-        "relationship": formData.relationship,
-        "phone_number": formData.phone_number,
-         "date_of_birth": formData.birthDate,
-         "address": formData.address,
-    "gender" : formData.gender
 
- 
+    
+
       
-      }
-
-        try{
-          
-            const res =  await guardianUpdate({guardianId,dataToSend})
-            toast.success('Infomation Updated')
-            refetch()
-        }
-        catch(error){
-            toast.error(error?.data)
-        }
-      }
 
   return (
-    (isLoading? <Loader/> : formData?
-    (   updateLoaing? <Loader/>:
+    (isLoading? <Loader/>:
+    ( 
     <Row>
 
 
@@ -97,9 +48,9 @@ if (data && !isLoading){
           <Form.Control
           type="text"
           name="first_name"
-          value={formData.first_name||data.first_name}
+          value={data.first_name}
           required
-          onChange={handleInputChange}
+          disabled
           />
           </Form.Group>
           </Col>
@@ -109,8 +60,8 @@ if (data && !isLoading){
           <Form.Control
           type="text"
           name="last_name"
-          value={formData.last_name||data.last_name}
-          onChange={handleInputChange}
+          value={data.last_name}
+          disabled
           required
           />
           </Form.Group>
@@ -123,14 +74,14 @@ if (data && !isLoading){
           type="text"
           name="username"
           disabled={true}
-        value={formData.username||data.username}
-                  onChange={handleInputChange}
+        value={data.username}
+                  
           required
           />
           </Form.Group>
           <Form.Group controlId="relation">
             <Form.Label>Relation</Form.Label>
-            <Form.Control as="select" name="relationship" value={formData.relationship||data.relationship} onChange={handleInputChange}>
+            <Form.Control disabled as="select" name="relationship" value={data.relationship} >
             <option value="">Select Relation</option>
             <option value="father">Father</option>
             <option value="mother">Mother</option>
@@ -145,8 +96,8 @@ if (data && !isLoading){
             <Form.Control
             type="number"
             name="phone_number"
-            value={formData.phone_number||data.phone_number}
-            onChange={handleInputChange}
+            value={data.phone_number}
+            disabled
             />
             </Form.Group>
 
@@ -155,8 +106,8 @@ if (data && !isLoading){
             <Form.Control
             type="date"
             name="birthDate"
-            value={formData.birthDate||data.date_of_birth}
-            onChange={handleInputChange}
+            value={data.date_of_birth}
+            disabled
             />
             </Form.Group>
 
@@ -166,23 +117,23 @@ if (data && !isLoading){
             <Form.Control
             type="text"
             name="address"
-            value={formData.address||data.address}
-            onChange={handleInputChange}
+            value={data.address}
+            disabled
             />
             </Form.Group>
 
 
             <Form.Group controlId="formGender">
           <Form.Label>Gender</Form.Label>
-          <Form.Control as="select" name="gender" value={formData.gender || data.gender}  onChange={handleInputChange}>
+          <Form.Control disabled as="select" name="gender" value={data.gender}  >
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           </Form.Control>
           </Form.Group>
           <div className="d-grid mt-3">
-                            <Button className='mt-3' onClick={updateHandler} variant="primary" type="submit">
-                             Update Guardian
+                            <Button className='mt-3' onClick={()=> navigate(`/guardians/update/${guardianId}`)} variant="primary" >
+                             Update Information
                             </Button>
                           </div>
                   </Form>
@@ -210,9 +161,9 @@ if (data && !isLoading){
     
     
     
-      </Row> ):
+      </Row> )
       
-      (<Loader/>)      )
+           )
     
     
 

@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
     window.location.href = path;
   };
   const loginUser = async (username, password) => {
-    console.log('hena')
     let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
       method: 'POST',
       headers: {
@@ -28,9 +27,6 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ username: username, password: password }),
     });
     let data = await response.json();
-
-
-
     let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
       method: 'GET',
       headers: {
@@ -38,16 +34,11 @@ export const AuthProvider = ({ children }) => {
         'Content-Type': 'application/json',
       },
     });
-    const userInfo = await response1.json();
-    console.log(userInfo)
-    
- 
-    if (response.status === 200) {
+    const userInfo = await response1.json(); 
+     if (response.status === 200) {
       console.log(response)
       setAuthTokens(data);
-      setUser(jwtDecode(data.access));
-
-      
+      setUser(jwtDecode(data.access));     
       localStorage.setItem('authTokens', JSON.stringify(data));
       const userInfo = {
         "id":user?.user_id,
@@ -56,16 +47,13 @@ export const AuthProvider = ({ children }) => {
         "username":"hena",
         "is_staff": true,
         "is_superuser":false,
-        "email":"hena@gmail.com",
-      
+        "email":"hena@gmail.com", 
       }
         dispatch(setstaff({...userInfo}))
       navigateTo('/home'); // Redirect to home page upon login
     } else {
       toast.error('Invalid Credential!');
     }
-
-
   };
 
   const logoutUser = () => {
@@ -75,7 +63,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('authTokens');
     // navigateTo('/staff-login'); // Redirect to login page upon logout
   };
-
   const updateToken = async () => {
     let response = await fetch(`${BASE_URL}/auth/jwt/refresh/`, {
       method: 'POST',
@@ -84,8 +71,6 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ refresh: authTokens?.refresh }),
     });
-
-
 
     let data = await response.json();
 
@@ -109,6 +94,8 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens((prevTokens) => ({
         ...prevTokens,
         access: data.access,
+       
+
       }));
    
       setUser(jwtDecode(data.access));
@@ -137,6 +124,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  
   useEffect(() => {
     if (loading) {
       updateToken();
