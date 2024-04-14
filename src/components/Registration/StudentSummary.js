@@ -19,7 +19,7 @@ const StudentSummary = ({setPreview, setStep, formData, formDatas,setFormDatas }
 const dispatch = useDispatch()
 
 
-  const redirect = '/guardian_registration'
+  const redirect = '/parent-assign'
 
 
 

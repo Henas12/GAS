@@ -1,5 +1,5 @@
 import { MyContextProvider } from './components/MyContext';
-import React from 'react';
+import React, { Component } from 'react';
 import  ReactDOM  from 'react-dom';
 import App from './App';
 import store from './store';
@@ -51,6 +51,7 @@ import GuardianUpdate from './components/guardian/GuardianUpdate';
 import GuardianBase from './GuardianBase';
 import GuardianHome from './components/specailGuardian/home'
 import VideoRecorder from './views/ui/video';
+import ParentForm from './components/users/parent/ParentForm'
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -61,6 +62,8 @@ const router = createBrowserRouter(
 
             <Route path='/students/:id' element={<Student />} /> 
             <Route path='/:id/guardian_registration' element={<GuardianForm />} /> 
+            <Route path='/:id/parent-assign' element={<GuardianForm />} /> 
+
             <Route path='/students' element={<Students />} /> 
             <Route path='/guardians' element={<Guardians />} />
             <Route path='/guardians/:id' element={<Guardian />} />
@@ -83,10 +86,14 @@ const router = createBrowserRouter(
             <Route path='/grid' element={<Grid />} /> 
             <Route path="/register" element={<AdminRoute><Registration/></AdminRoute>} /> 
             {/* <Route path='/register' element={<Registration />} />    */}
-          </Route>    
+          </Route>   
+
           <Route path='/' element={<New />}> 
         
           <Route path='/staff-login' element={<Login />} /> 
+          <Route path='/parent-register' element={<ParentForm />} /> 
+
+          
           </Route>
 
 <Route path='/' element={<StaffBase />}> 
