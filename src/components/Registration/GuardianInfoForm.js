@@ -8,7 +8,7 @@ import Apps from '../../views/ui/Apps'
 import { resetStudent } from "../../slices/studentSlice";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputChange, newGuardian,handleRegisterGuardians, handleGuardianImage,handleNext,validateStep, setRefetchs,refetchs }) => {
+const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputChange, newGuardian,handleRegisterGuardians, handleGuardianImage,handleNext,validateStep, setRefetchs,refetchs,setFormData }) => {
   
   const[openCamera, setOpenCamera]= useState(true)
   const navigate = useNavigate()
@@ -21,6 +21,7 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
 
   const reserhandle =() =>{
     handleNext()
+    handleGuardianImage()
     setOpenCamera(true)
 
   }
@@ -37,6 +38,42 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
 
   
   }
+
+
+
+  const handleCaptureImage = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+   
+
+    if (formData.user_photo_1 === null) {
+      setFormData(prevState => ({ ...prevState, user_photo_1: imageSrc }));
+      console.log('hena1')
+      // setPrompt('Take Picture 2');
+    } else if (formData.user_photo_2 === null) {
+      setFormData(prevState => ({ ...prevState, user_photo_2: imageSrc }));
+      console.log('hena2')
+
+      // setPrompt('Take Picture 3');
+    } else if (formData.user_photo_3 === null) {
+      setFormData(prevState => ({ ...prevState, user_photo_3: imageSrc }));
+      console.log('hena3')
+
+      // setSubmit(true)
+    } else {
+      console.log('All images captured.');
+    }
+  };
+
+  const handleRetakeImages = () => {
+    // setSubmit(false)
+
+    setFormData({
+      user_photo_1: null,
+      user_photo_2: null,
+      user_photo_3: null
+    });
+  };
+
   return(
 
   
@@ -196,16 +233,21 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
        className="mb-2"
        style={{ height: '400px', width: '400px' }}
      />
-     <Button variant="primary" onClick={() => { handleGuardianImage() }}>
+          <div className="d-flex justify-content-between align-items-center p-3">
+
+     <Button variant="primary" onClick={() => { handleCaptureImage() }}>
        Capture Image
      </Button>
-
-    
+     <Button variant="secondary" onClick={handleRetakeImages}>
+            Retake Images
+          </Button>
+        
+          </div>
    </Form.Group>
-      <Button variant="primary" type="submit" onClick={reserhandle}>
+      {formData.user_photo_3 &&<Button variant="primary" type="submit" onClick={reserhandle}>
       Submit
     </Button>
-
+}
    
     </>
    )

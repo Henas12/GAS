@@ -23,9 +23,6 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
         body:guardianFormDatas,
         
       }),
-
-      
-
      
     }),
 
@@ -55,9 +52,38 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
         body: data,
         
       }),
-    })
+    }),
+   parentRegistration: builder.mutation({
+      query: (parentFormDatas) => ({
+        url: `${BASE_URL}/parents/`,
+        method: 'POST',
+        body:parentFormDatas,
+        
+      }),
 
 
-  })
+  }),
+  homeRTRegistration: builder.mutation({
+    query: (teacherData) => ({
+      url: `${BASE_URL}/hrts/`,
+      method: 'POST',
+      body:teacherData,
+      
+    }),
+
+
+}),
+
+authenticatorRegistration: builder.mutation({
+  query: (authenticatorData) => ({
+    url: `${BASE_URL}/authenticator/`,
+    method: 'POST',
+    body:authenticatorData,
+    
+  }),
+
+
+}),
 })
-export const { useStudentRegistrationMutation, useGuardianRegistrationMutation,useGetGuardianQuery, useGuardianFromExistingMutation, useVideoMutation } = registrationApiSlice;
+})
+export const { useStudentRegistrationMutation, useGuardianRegistrationMutation,useGetGuardianQuery, useGuardianFromExistingMutation, useVideoMutation, useParentRegistrationMutation, useHomeRTRegistrationMutation, useAuthenticatorRegistrationMutation } = registrationApiSlice;

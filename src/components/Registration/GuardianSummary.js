@@ -47,6 +47,10 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
         gender : '',
         birthDate: '',
         address: '',
+        user_photo_1: null,
+        user_photo_2: null,
+        user_photo_3: null
+    
     
       };
       setGuardianFormData(initialFormData)
@@ -168,11 +172,45 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
           </tr>
     
           <tr  className="border-top">
-          <td>Image</td>
+          <td>Image 1</td>
             <td>
               <div className="d-flex align-items-center p-2">
                 <img
-                  src={guardianFormData.image}
+                  src={guardianFormData.user_photo_1}
+                  alt="avatar"
+                  width="100"
+                  height="150"
+                />
+                
+              </div>
+            </td>
+           
+       
+           
+          </tr> <tr  className="border-top">
+          <td>Image 2</td>
+            <td>
+              <div className="d-flex align-items-center p-2">
+                <img
+                  src={guardianFormData.user_photo_2}
+                  alt="avatar"
+                  width="100"
+                  height="150"
+                />
+                
+              </div>
+            </td>
+           
+       
+           
+          </tr>
+        
+          <tr  className="border-top">
+          <td>Image 3</td>
+            <td>
+              <div className="d-flex align-items-center p-2">
+                <img
+                  src={guardianFormData.user_photo_3}
                   alt="avatar"
                   width="100"
                   height="150"

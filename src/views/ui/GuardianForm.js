@@ -23,15 +23,24 @@ const GuardianForm = () => {
     gender : '',
     birthDate: '',
     address: '',
+    user_photo_1: null,
+    user_photo_2: null,
+    user_photo_3: null
+
   });
     const handleGuardianImage = async () => {
-      const imageSrc = webcamRef.current.getScreenshot();
-      setGuardianFormData({ ...guardianFormData, image: imageSrc });
-      const response = await fetch(imageSrc);
-          const blob = await response.blob();
+      const response1 = await fetch(guardianFormData.user_photo_1);
+      const response2 = await fetch(guardianFormData.user_photo_2);
+      const response3 = await fetch(guardianFormData.user_photo_3);
+
+      const blob1 = await response1.blob();
+      const blob2 = await response2.blob();
+      const blob3 = await response3.blob();
           guardianFormDatas.append('username', guardianFormData.username)
-          guardianFormDatas.append('user_photo', blob, 'image.jpg');
-          guardianFormDatas.append( 'first_name',guardianFormData.first_name)
+
+          guardianFormDatas.append('user_photo_1', blob1, 'image1.jpg');
+          guardianFormDatas.append('user_photo_2', blob2, 'image2.jpg');
+          guardianFormDatas.append('user_photo_3', blob3, 'image3.jpg');          guardianFormDatas.append( 'first_name',guardianFormData.first_name)
           guardianFormDatas.append('last_name', guardianFormData.last_name)
           guardianFormDatas.append('phone_number', guardianFormData.phone_number)
           guardianFormDatas.append('relationship', guardianFormData.relationship)
@@ -188,6 +197,7 @@ const GuardianForm = () => {
                     validateStep={validateStep}
                     setRefetchs={setRefetchs}
                     refetchs={refetchs}
+                    setFormData= {setGuardianFormData}
                   />
                
                 {/* ... other components ... */}
@@ -211,7 +221,30 @@ const GuardianForm = () => {
             </CardTitle>
             <CardBody className="">
             <div className="button-group">
-             { guardianFormData.image? <Image src={guardianFormData.image} alt="Image description" fluid /> :  
+             { guardianFormData.user_photo_1 ?
+             (
+             
+             <div className="mt-2 image-row">
+             {guardianFormData.user_photo_1 && (
+               <div className="image-item">
+                 <strong>Preview 1:</strong>
+                 <img src={guardianFormData.user_photo_1} alt="Captured 1" className="img-fluid" />
+               </div>
+             )}
+             {guardianFormData.user_photo_2 && (
+               <div className="image-item">
+                 <strong>Preview 2:</strong>
+                 <img src={guardianFormData.user_photo_2} alt="Captured 2" className="img-fluid" />
+               </div>
+             )}
+             {guardianFormData.user_photo_3 && (
+               <div className="image-item">
+                 <strong>Preview 3:</strong>
+                 <img src={guardianFormData.user_photo_3} alt="Captured 3" className="img-fluid" />
+               </div>
+             )}
+           </div>)
+             :  
              
              <GuardiansInfo
               refetchs={refetchs} setRefetch={setRefetchs}
