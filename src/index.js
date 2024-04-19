@@ -51,9 +51,9 @@ import GuardianUpdate from './components/guardian/GuardianUpdate';
 import GuardianBase from './GuardianBase';
 import GuardianHome from './components/specailGuardian/home'
 import VideoRecorder from './views/ui/video';
-import ParentForm from './components/users/parent/ParentForm'
 import HomeRTForm from './components/users/homeroomTeacher/HomeRTForm';
 import AuthenticatorForm from './components/users/authenticator/AuthenticatorForm';
+import ParentForm from './views/parentAssignment/ParentForm';
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -64,7 +64,7 @@ const router = createBrowserRouter(
 
             <Route path='/students/:id' element={<Student />} /> 
             <Route path='/:id/guardian_registration' element={<GuardianForm />} /> 
-            <Route path='/:id/parent-assign' element={<GuardianForm />} /> 
+            <Route path='/:id/parent-assign' element={<ParentForm />} /> 
 
             <Route path='/students' element={<Students />} /> 
             <Route path='/guardians' element={<Guardians />} />

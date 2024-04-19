@@ -4,7 +4,7 @@ import { Form, Col, Row, Alert,Button } from 'react-bootstrap';
 import Webcam from 'react-webcam';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import Apps from '../../views/ui/Apps'
+import Apps from './ParentApp';
 import { resetStudent } from "../../slices/studentSlice";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

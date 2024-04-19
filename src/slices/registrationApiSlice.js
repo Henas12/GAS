@@ -83,7 +83,33 @@ authenticatorRegistration: builder.mutation({
   }),
 
 
+  assignParent: builder.query({
+    query: (studentId) => ({
+      url: `${BASE_URL}/students/${studentId}/assign_parent/`,
+    }),
+    keepUnusedDataFor: 5,
+  }),
+  
+  
+  parentFromExisting: builder.mutation({
+    query: ({studentId,data}) => ({
+      url: `${BASE_URL}/students/${studentId}/assign_parent/`,
+      method: 'POST',
+      body: data,
+      
+    }),
+  }),
+  
+
+
 }),
 })
 })
-export const { useStudentRegistrationMutation, useGuardianRegistrationMutation,useGetGuardianQuery, useGuardianFromExistingMutation, useVideoMutation, useParentRegistrationMutation, useHomeRTRegistrationMutation, useAuthenticatorRegistrationMutation } = registrationApiSlice;
+export const { useStudentRegistrationMutation, 
+  useGuardianRegistrationMutation,useGetGuardianQuery, 
+  useGuardianFromExistingMutation, useVideoMutation, 
+  useParentRegistrationMutation, useHomeRTRegistrationMutation,
+   useAuthenticatorRegistrationMutation,
+   useAssignParentQuery,
+  useParentFromExistingMutation
+  } = registrationApiSlice;

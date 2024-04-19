@@ -5,25 +5,30 @@ import ResultsComponent from './ResultsComponent';
 import { Card, Button, CardBody, CardTitle, CardSubtitle, Table } from "reactstrap";
 import { useGetGuardianQuery } from '../../slices/registrationApiSlice';
 import Loader from '../../layouts/loader/Loader';
-import { useGuardianFromExistingMutation } from '../../slices/registrationApiSlice';
+import { useParentFromExistingMutation, useAssignParentQuery } from '../../slices/registrationApiSlice';
 import { toast } from 'react-toastify';
 import {useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 const Apps = ({setRefetch, refetchs}) => {
  
 
-  const [guardians, {isLoading: guardianLoading} ] = useGuardianFromExistingMutation()
+  const navigate  = useNavigate()
+  
+  
+  const [guardians, {isLoading: guardianLoading} ] = useParentFromExistingMutation()
 
   // const { studentInfo } = useSelector((state) => state.student);
   // let studentId = studentInfo.id
   const {id: studentId} = useParams();
-  const { data:initialData, isLoading, error,refetch } = useGetGuardianQuery(studentId);
+  const { data:initialData, isLoading, error,refetch } = useAssignParentQuery(studentId);
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     if (initialData) {
+     
       setFilteredData(initialData);
-
+    
     }
   }, [initialData,isLoading]);
  
@@ -32,21 +37,34 @@ const Apps = ({setRefetch, refetchs}) => {
   const handleSearch = (searchTerm) => {
     console.log(searchTerm)
     const filteredResults = initialData.filter((item) =>
-      item.username.toLowerCase().includes(searchTerm.toLowerCase())
+      item.user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(filteredResults);
   };
 
   const handleItemClick = async(item) => {
     try{
-    const data = {'guardian_id':item.id}
+      if(item.user.is_active=== true)
+      {
+
+      
+    const data = {'parent_id':item.user.id}
     console.log(studentId)
     const res = await guardians({studentId,data}).unwrap()
-    toast.success('Guardian is Added')
+    toast.success('Parent is Added')
+    navigate(`/${studentId}/guardian_registration`)
     refetch();
     setRefetch(true)
-    console.log(refetchs)
-    console.log(selectedItem)
+    
+
+  }
+
+  else{
+
+
+    toast.error('Parent is Added')
+
+  }
  
   }
     catch(err) {
