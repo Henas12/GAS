@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }) => {
     // navigateTo('/staff-login'); // Redirect to login page upon logout
   };
   const updateToken = async () => {
+
     let response = await fetch(`${BASE_URL}/auth/jwt/refresh/`, {
       method: 'POST',
       headers: {
@@ -97,23 +98,23 @@ export const AuthProvider = ({ children }) => {
       
       localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
     
-      let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-        method: 'GET',
-        headers: {
-          'Authorization':  `Bearer ${ data.access}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      // let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+      //   method: 'GET',
+      //   headers: {
+      //     'Authorization':  `Bearer ${ data.access}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
 
-      const userInfo = await response1.json(); 
-       if (response.status === 200) {
-        console.log(response)
-        setAuthTokens(data);
-        setUser(jwtDecode(data.access));     
-        localStorage.setItem('authTokens', JSON.stringify(data));
-        console.log(userInfo)
+      // const userInfo = await response1.json(); 
+      //  if (response.status === 200) {
+      //   console.log(response)
+      //   setAuthTokens(data);
+      //   setUser(jwtDecode(data.access));     
+      //   localStorage.setItem('authTokens', JSON.stringify(data));
+      //   console.log(userInfo)
         
-          dispatch(setuser({...userInfo}))}
+      //     dispatch(setuser({...userInfo}))}
 
 
 
