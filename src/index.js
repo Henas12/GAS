@@ -54,6 +54,7 @@ import VideoRecorder from './views/ui/video';
 import HomeRTForm from './components/users/homeroomTeacher/HomeRTForm';
 import AuthenticatorForm from './components/users/authenticator/AuthenticatorForm';
 import ParentForm from './views/parentAssignment/ParentForm';
+import TeacherRoute from './utils/HomeRoomTeacher';
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -110,10 +111,12 @@ const router = createBrowserRouter(
 <Route path='/profile' element={<Profile />} /> 
 {/* <Route path='/test' element={<Test />} />  */}
 </Route>
+
 <Route path='/teacher' element={<HrtBase />}> 
-<Route path='/teacher/home' element={<THome />} /> 
+<Route path='/teacher/home' element=  { <TeacherRoute> <THome /></TeacherRoute> } /> 
 <Route path='/teacher/:id' element={<ContactForm />} /> 
 </Route>
+
 <Route path='/guardian' element={<GuardianBase />}> 
 <Route path='/guardian/home' element={<GuardianHome/>} /> 
 </Route>

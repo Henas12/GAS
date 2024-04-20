@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
-import { setstaff,resetstaff } from '../slices/staffSilce';
+
+import { setuser, resetuser } from '../slices/staffSilce';
+
 import {  useDispatch } from 'react-redux';
 import { BASE_URL } from '../constants';
 const AuthContext = createContext();
@@ -40,16 +42,9 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));     
       localStorage.setItem('authTokens', JSON.stringify(data));
-      const userInfo = {
-        "id":user?.user_id,
-        "first_name":"Henok",
-        "last_name":'Deme',
-        "username":"hena",
-        "is_staff": true,
-        "is_superuser":false,
-        "email":"hena@gmail.com", 
-      }
-        dispatch(setstaff({...userInfo}))
+      console.log(userInfo)
+      
+        dispatch(setuser({...userInfo}))
       navigateTo('/home'); // Redirect to home page upon login
     } else {
       toast.error('Invalid Credential!');
@@ -59,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   const logoutUser = () => {
     setAuthTokens(null);
     setUser(null);
-    dispatch(resetstaff())
+    dispatch(resetuser())
     localStorage.removeItem('authTokens');
     // navigateTo('/staff-login'); // Redirect to login page upon logout
   };
@@ -101,20 +96,35 @@ export const AuthProvider = ({ children }) => {
       setUser(jwtDecode(data.access));
       
       localStorage.setItem('authTokens', JSON.stringify({refresh: authTokens.refresh,access: data.access}));
-      console.log(user)
-      const userInfo = {
-        "id":user.user_id,
-        "first_name":"Henok",
-        "last_name":'Deme',
-        "username":"hena",
-        "is_staff": true,
-        "is_superuser":false,
-        "email":"hena@gmail.com",
+    
+      let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+        method: 'GET',
+        headers: {
+          'Authorization':  `Bearer ${ data.access}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const userInfo = await response1.json(); 
+       if (response.status === 200) {
+        console.log(response)
+        setAuthTokens(data);
+        setUser(jwtDecode(data.access));     
+        localStorage.setItem('authTokens', JSON.stringify(data));
+        console.log(userInfo)
+        
+          dispatch(setuser({...userInfo}))}
+
+
+
+
+
+
+
       
-      }
-        dispatch(setstaff({...userInfo}))
+        
     } else {
-      dispatch(resetstaff())
+      dispatch(resetuser())
       logoutUser();
     }
 

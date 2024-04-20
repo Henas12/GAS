@@ -2,12 +2,12 @@ import { Navigate } from 'react-router-dom'
 import { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { useSelector } from 'react-redux';
-const AdminRoute = ({children, ...rest}) => {
+const TeacherRoute = ({children, ...rest}) => {
     const { userInfo } = useSelector((state) => state.user);
     let {user} = useContext(AuthContext)
  
-    return !(user && userInfo?.is_superuser) ?  <Navigate to='/login'/> : children;
+    return !(user && userInfo?.is_hrts) ?  <Navigate to='/hena'/> : children;
 }
 
-export default AdminRoute;
+export default TeacherRoute;
   

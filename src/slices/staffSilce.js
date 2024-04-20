@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  studentInfo: localStorage.getItem('staffInfo')
-    ? JSON.parse(localStorage.getItem('staffInfo'))
+  studentInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
     : null,
 };
 
-const staffSlice = createSlice({
-  name: 'staff',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    setstaff: (state, action) => {
-      state.staffInfo = action.payload;
-      localStorage.setItem('staffInfo', JSON.stringify(action.payload));
+    setuser: (state, action) => {
+      state.userInfo = action.payload;
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
     },
 
-    resetstaff: (state, action) => {
-      state.staffInfo = null;
-      localStorage.removeItem('staffInfo');
+    resetuser: (state, action) => {
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
     },
 
 
   },
 });
-export const { setstaff, resetstaff } = staffSlice.actions;
-export default staffSlice.reducer;  
+export const { setuser, resetuser } = userSlice.actions;
+export default userSlice.reducer;  
