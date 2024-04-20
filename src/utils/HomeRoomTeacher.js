@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 const TeacherRoute = ({children, ...rest}) => {
     const { userInfo } = useSelector((state) => state.user);
     let {user} = useContext(AuthContext)
+    console.log(userInfo)
  
-    return !(user && userInfo?.is_hrts) ?  <Navigate to='/hena'/> : children;
+    return !(user && userInfo?.is_hrt) ?  <Navigate to='/login'/> : children;
 }
 
 export default TeacherRoute;

@@ -114,7 +114,7 @@ const router = createBrowserRouter(
 
 <Route path='/teacher' element={<HrtBase />}> 
 <Route path='/teacher/home' element=  { <TeacherRoute> <THome /></TeacherRoute> } /> 
-<Route path='/teacher/:id' element={<ContactForm />} /> 
+<Route path='/teacher/:id' element={ <TeacherRoute><ContactForm /> </TeacherRoute>} /> 
 </Route>
 
 <Route path='/guardian' element={<GuardianBase />}> 

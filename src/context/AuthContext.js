@@ -42,10 +42,15 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));     
       localStorage.setItem('authTokens', JSON.stringify(data));
-      console.log(userInfo)
+   
       
         dispatch(setuser({...userInfo}))
+        
+        if(userInfo.is_autheticator)
       navigateTo('/home'); // Redirect to home page upon login
+    else if(userInfo.is_hrt){
+      navigateTo('/teacher/home')
+    }
     } else {
       toast.error('Invalid Credential!');
     }
