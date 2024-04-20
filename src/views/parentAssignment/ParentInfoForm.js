@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 import Apps from './ParentApp';
 import { resetStudent } from "../../slices/studentSlice";
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputChange, newGuardian,handleRegisterGuardians, handleGuardianImage,handleNext,validateStep, setRefetchs,refetchs,setFormData }) => {
+const GuardianInfoForm = ({ webcamRef, formData,newGuardian,setNewGuardian, handleGuardianImage, setRefetchs,refetchs,setFormData,setParentId }) => {
   
   const[openCamera, setOpenCamera]= useState(true)
   const navigate = useNavigate()
@@ -18,26 +19,15 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
     navigate('/student_registration')
   }
 
-
+  const {id: studentId} = useParams();
   const reserhandle =() =>{
-    handleNext()
+
     handleGuardianImage()
     setOpenCamera(true)
 
   }
 
 
-  const checkInput = ()=>{
-    setRefetchs(true)
-    console.log(refetchs)
-    if (validateStep()) {
-      setOpenCamera(false)
-    } else {
-      toast.error('Please fill all the required fields correctly before submitting.');
-    }
-
-  
-  }
 
 
 
@@ -81,7 +71,7 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
   <>
      {!newGuardian && (
       <>
-  <Apps setRefetch={setRefetchs}  refetchs={refetchs}/>
+  <Apps setNewGuardian={setNewGuardian} setRefetch={setRefetchs}  refetchs={refetchs}  setParentId={setParentId}/>
 
  
     {/* <Button variant="primary"  onClick={fetch}>
@@ -89,8 +79,13 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
     </Button> */}
 
 <div className="d-flex justify-content-between">
-            <Button variant="primary" onClick={handleRegisterGuardians}>
-              Register Guardians
+            <Button variant="primary" onClick={(()=>
+            navigate(`/${studentId}/guardian_registration`))
+
+}>
+
+            
+                 Register Guardians
             </Button>
             <Button variant="primary" onClick={clearEveryting}>
               Finished
@@ -107,22 +102,8 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
     {newGuardian && (
   <>
 
-{openCamera?
-          ( 
-            <>
-         
 
 
-
-
-            <Button variant="primary" onClick={checkInput}>
-       Capture Image
-     </Button>
-    </>
-          ):
-     ( 
-     
-     <> 
      <Form.Group controlId="formStep2">
      
      <Form.Label>Take a Picture</Form.Label>
@@ -157,12 +138,7 @@ const GuardianInfoForm = ({ webcamRef, formData, formErrors, handleGuadianInputC
    }
         
    
-   
-                 
-                
-    </>
-    
-    )}
+
 </>)
 };
 
