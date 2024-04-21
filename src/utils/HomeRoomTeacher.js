@@ -3,11 +3,11 @@ import { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { useSelector } from 'react-redux';
 const TeacherRoute = ({children, ...rest}) => {
-    const { userInfo } = useSelector((state) => state.user);
+    const { studentInfo } = useSelector((state) => state.user);
     let {user} = useContext(AuthContext)
-    console.log(userInfo)
+    console.log(studentInfo)
  
-    return !(user && userInfo?.is_hrt) ?  <Navigate to='/login'/> : children;
+    return !(user && studentInfo?.is_hrt) ?  <Navigate to='/login'/> : children;
 }
 
 export default TeacherRoute;

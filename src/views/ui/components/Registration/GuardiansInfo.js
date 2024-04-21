@@ -7,30 +7,40 @@ import {
   CardTitle,
   Row,
   Col,
-  Table
+  Table,
+  
 } from "reactstrap";
-import Feeds from '../dashboard/Feeds';
-import { BASE_URL } from '../../constants';
-import { useLogsQuery } from '../../slices/studentApiSlice';
+import image from './kids-walking.jpg';
 import {  Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetGuardiansQuery, useRemoveGuardianMutation } from '../../slices/guardiansApiSlice';
+import { useGetGuardiansQuery,useRemoveGuardianMutation } from '../../slices/guardiansApiSlice';
+
 import user1 from "../../assets/images/users/user1.jpg";
 import Loader from '../../layouts/loader/Loader';
 import {toast} from 'react-toastify'
-import { useGetSingleStudentQuery } from '../../slices/studentApiSlice';
+import{Image} from'react-bootstrap'
+import { BASE_URL } from '../../constants';
+
+const tableData = [
+  {
+    user_image: user1,
+    first_name: "Hanna Gover",
+    last_name: "hgover",
+    username: " React",
+    relationship: "pending",
+ 
+  }
+];
 
 
 
-
-function GuardiansList() {
+function GuadiansInfo({refetchs,setRefetch}) {
   const { id: studentId } = useParams();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [id, setId] =  useState()
   const[reomveGuardian, {isLoading:reomveGuardianIsLoading}] =useRemoveGuardianMutation()
 
   const {data, isLoading, error, refetch} = useGetGuardiansQuery(studentId)
-
   const handleShowConfirmation = (guardianId) => {
     setId(guardianId)
     setShowConfirmation(true);
@@ -39,8 +49,8 @@ function GuardiansList() {
   const handleConfirmAction = async() => {
     try{
       const res = await reomveGuardian({studentId, id})
-      toast.success('Guardian is Removed')
-
+      toast.success('Guardian is Deleted')
+      console.log(res)
       refetch()
      }
      catch(error){
@@ -48,6 +58,12 @@ function GuardiansList() {
      }
     setShowConfirmation(false);
   };
+  if(refetchs){
+   console.log('hena')
+    refetch()
+    setRefetch(false)
+
+  }
   
   const handleCancelAction = () => {
     
@@ -57,6 +73,14 @@ function GuardiansList() {
 const navigate = useNavigate()
 
 
+useEffect(()=>{
+  if(data){
+  
+    console.log(data)
+  }
+  
+  },[data])
+  
 
   return (
 
@@ -72,13 +96,15 @@ const navigate = useNavigate()
       {/* --------------------------------------------------------------------------------*/}
       {/* Card-1*/}
       {/* --------------------------------------------------------------------------------*/}
-      <Card>
+      
+{ data?  
+(<Card>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
           Guardians List
         </CardTitle>
         <CardBody className="">
 
-        <Table className="no-wrap mt-3 align-middle" responsive borderless>
+        <Table>
             <thead>
               <tr>
                 <th>Full Name</th>
@@ -97,15 +123,13 @@ const navigate = useNavigate()
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                      // src={`http://10.42.0.61:8000${guardian?.user_photo}`}
                       
-                      src={`${BASE_URL}${guardian?.user_photo}`}
+                      src={`${BASE_URL}${guardian.user_photo}`}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"
                         height="45"
                       />
-               
                       <div className="ms-3">
                         <h6 className="mb-0">{guardian.first_name} {guardian.last_name}</h6>
                         <span className="text-muted">{guardian.username}</span>
@@ -128,13 +152,12 @@ const navigate = useNavigate()
           </Table>       
           
        
-        <div className="d-grid mt-3">
-        <Button className="btn" color="primary"  block onClick={()=>navigate(`/${studentId}/guardian_registration`)} >
-                 Add New Guardians
-                </Button>
-                </div>
+      
                 </CardBody>
-      </Card>
+      </Card>):
+      <Image src={image} alt="Image description" fluid />
+     
+      }
     </Col>
 
 
@@ -144,11 +167,7 @@ const navigate = useNavigate()
 
 
 
-    <Col sm="6" lg="6" xl="5" xxl="4">      {/* --------------------------------------------------------------------------------*/}
-      {/* Card-2*/}
-      {/* --------------------------------------------------------------------------------*/}
-      
-    </Col>
+
     
 
     <Modal show={showConfirmation} onHide={handleCancelAction}>
@@ -171,4 +190,4 @@ const navigate = useNavigate()
   )
 }
 
-export default GuardiansList
+export default GuadiansInfo

@@ -32,6 +32,25 @@ const navigation = [
     href: "/attendance",
     icon: "bi bi-people",
   },
+
+  {
+    title: "Parents",
+    href: "/parents",
+    icon: "bi bi-person",
+  },
+  {
+    title: "Teacher",
+    href: "/teachers",
+    icon: "bi bi-person",
+  },
+
+  {
+    title: "Authenticator",
+    href: "/authenticators",
+    icon: "bi bi-person",
+  },
+
+  
 ];
 
 const Sidebar = () => {

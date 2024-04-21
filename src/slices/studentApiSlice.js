@@ -41,10 +41,17 @@ logs:builder.query({
   keepUnusedDataFor:5
 }),
 
+grade:builder.query({
+  query:()=>({
+  url: `${BASE_URL}/sections/`, 
+  }),
+  keepUnusedDataFor:5
+}),
+
 
 })
 });
 
 export const { useGetStudentsQuery, useGetSingleStudentQuery, 
   useUpdateStudentMutation, useDeleteSudentMutation,
-  useLogsQuery} = studentApiSlice;
+  useLogsQuery, useGradeQuery} = studentApiSlice;

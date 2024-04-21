@@ -14,7 +14,7 @@ import { BASE_URL } from '../../constants';
 import { useLogsQuery } from '../../slices/studentApiSlice';
 import {  Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetGuardiansQuery, useRemoveGuardianMutation } from '../../slices/guardiansApiSlice';
+import { useGetParentsQuery, useRemoveParentMutation } from '../../slices/ParentApiSlice';
 import user1 from "../../assets/images/users/user1.jpg";
 import Loader from '../../layouts/loader/Loader';
 import {toast} from 'react-toastify'
@@ -23,13 +23,13 @@ import { useGetSingleStudentQuery } from '../../slices/studentApiSlice';
 
 
 
-function GuardiansList() {
+function ParentList() {
   const { id: studentId } = useParams();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [id, setId] =  useState()
-  const[reomveGuardian, {isLoading:reomveGuardianIsLoading}] =useRemoveGuardianMutation()
+  const[reomveGuardian, {isLoading:reomveGuardianIsLoading}] =useRemoveParentMutation()
 
-  const {data, isLoading, error, refetch} = useGetGuardiansQuery(studentId)
+  const {data, isLoading, error, refetch} = useGetParentsQuery(studentId)
 
   const handleShowConfirmation = (guardianId) => {
     setId(guardianId)
@@ -74,7 +74,7 @@ const navigate = useNavigate()
       {/* --------------------------------------------------------------------------------*/}
       <Card>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
-          Guardians List
+          Parent List
         </CardTitle>
         <CardBody className="">
 
@@ -93,13 +93,13 @@ const navigate = useNavigate()
 
               
               {data.map((guardian) => (
-                <tr key={guardian.id} className="border-top">
+                <tr key={guardian.user.id} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                      // src={`http://10.42.0.61:8000${guardian?.user_photo}`}
+                      // src={`http://10.42.0.61:8000${guardian.user?.user_photo}`}
                       
-                      src={`${BASE_URL}${guardian?.user_photo}`}
+                      src={`${BASE_URL}${guardian.user?.user_photo_1}`}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"
@@ -107,17 +107,17 @@ const navigate = useNavigate()
                       />
                
                       <div className="ms-3">
-                        <h6 className="mb-0">{guardian.first_name} {guardian.last_name}</h6>
-                        <span className="text-muted">{guardian.username}</span>
+                        <h6 className="mb-0">{guardian.user.first_name} {guardian.user.last_name}</h6>
+                        <span className="text-muted">{guardian.user.username}</span>
                       </div>
                     </div>
                   </td>
                   <td>{guardian.relationship}</td>
                      
-                  <td><Button onClick={()=> navigate(`/guardians/${guardian.id}`)} className="btn" color="info">
+                  <td><Button onClick={()=> navigate(`/parents/${guardian.user.id}`)} className="btn" color="info">
              More
             </Button></td>
-            <td><Button onClick={()=> handleShowConfirmation(guardian.id)} className="btn-danger" >
+            <td><Button onClick={()=> handleShowConfirmation(guardian.user.id)} className="btn-danger" >
              Remove
             </Button></td>
 
@@ -129,8 +129,8 @@ const navigate = useNavigate()
           
        
         <div className="d-grid mt-3">
-        <Button className="btn" color="primary"  block onClick={()=>navigate(`/${studentId}/guardian_registration`)} >
-                 Add New Guardians
+        <Button className="btn" color="primary"  block onClick={()=>navigate(`/${studentId}/parent-assign`)} >
+                 Assign New Parent
                 </Button>
                 </div>
                 </CardBody>
@@ -147,7 +147,14 @@ const navigate = useNavigate()
     <Col sm="6" lg="6" xl="5" xxl="4">      {/* --------------------------------------------------------------------------------*/}
       {/* Card-2*/}
       {/* --------------------------------------------------------------------------------*/}
-      
+      <Card>
+        <CardTitle tag="h3" className="border-bottom p-3 mb-0">
+          Recent Activities
+        </CardTitle>
+        <CardBody className="">
+        <Feeds />
+        </CardBody>
+      </Card>
     </Col>
     
 
@@ -171,4 +178,4 @@ const navigate = useNavigate()
   )
 }
 
-export default GuardiansList
+export default ParentList

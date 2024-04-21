@@ -11,7 +11,7 @@ const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
   
     user: userReducer,
-    student:studentReducer,
+    
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

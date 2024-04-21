@@ -10,38 +10,38 @@ import {
   Table
 } from "reactstrap";
 import Feeds from '../dashboard/Feeds';
-import { BASE_URL } from '../../constants';
-import { useLogsQuery } from '../../slices/studentApiSlice';
+
 import {  Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetGuardiansQuery, useRemoveGuardianMutation } from '../../slices/guardiansApiSlice';
 import user1 from "../../assets/images/users/user1.jpg";
 import Loader from '../../layouts/loader/Loader';
 import {toast} from 'react-toastify'
-import { useGetSingleStudentQuery } from '../../slices/studentApiSlice';
+import { useGetMyStudentsQuery, useRemoveStudentMutation } from '../../slices/guardiansApiSlice';
 
 
 
 
-function GuardiansList() {
-  const { id: studentId } = useParams();
+
+function StudentList() {
+  const { id: guardianId } = useParams();
+  const {data, isLoading, error, refetch} = useGetMyStudentsQuery(guardianId)
+
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [id, setId] =  useState()
-  const[reomveGuardian, {isLoading:reomveGuardianIsLoading}] =useRemoveGuardianMutation()
+  const[removeStudent, {isLoading:removeStudentIsLoading}] =useRemoveStudentMutation()
 
-  const {data, isLoading, error, refetch} = useGetGuardiansQuery(studentId)
-
-  const handleShowConfirmation = (guardianId) => {
-    setId(guardianId)
+  const handleShowConfirmation = (studentId) => {
+    setId(studentId)
     setShowConfirmation(true);
   };
 
   const handleConfirmAction = async() => {
     try{
-      const res = await reomveGuardian({studentId, id})
-      toast.success('Guardian is Removed')
+      const res = await removeStudent({guardianId, id})
+      
 
       refetch()
+      toast.success("Studetnt Is Removed")
      }
      catch(error){
        toast.error(error?.data)
@@ -57,6 +57,16 @@ function GuardiansList() {
 const navigate = useNavigate()
 
 
+useEffect(()=>{
+  if(data){
+  
+    console.log(data)
+    console.log("hena")
+    refetch()
+  }
+  
+  },[data])
+  
 
   return (
 
@@ -66,15 +76,10 @@ const navigate = useNavigate()
           
           
      {     isLoading? <Loader/>:
- (  reomveGuardianIsLoading?<Loader/> :
- (  <Col sm="6" lg="6" xl="7" xxl="8">
-
-      {/* --------------------------------------------------------------------------------*/}
-      {/* Card-1*/}
-      {/* --------------------------------------------------------------------------------*/}
-      <Card>
+ (  removeStudentIsLoading?<Loader/> :
+ (  <>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
-          Guardians List
+          Students List
         </CardTitle>
         <CardBody className="">
 
@@ -82,7 +87,7 @@ const navigate = useNavigate()
             <thead>
               <tr>
                 <th>Full Name</th>
-                <th>Relation</th>
+               
 
                 <th>Detail</th>
              
@@ -92,32 +97,32 @@ const navigate = useNavigate()
             <tbody>
 
               
-              {data.map((guardian) => (
-                <tr key={guardian.id} className="border-top">
+              {data.map((student) => (
+                <tr key={student.id} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                      // src={`http://10.42.0.61:8000${guardian?.user_photo}`}
-                      
-                      src={`${BASE_URL}${guardian?.user_photo}`}
+                      src={student?.image}  
+
                         className="rounded-circle"
                         alt="avatar"
                         width="45"
                         height="45"
                       />
-               
+
+                   
                       <div className="ms-3">
-                        <h6 className="mb-0">{guardian.first_name} {guardian.last_name}</h6>
-                        <span className="text-muted">{guardian.username}</span>
+                        <h6 className="mb-0">{student.first_name} {student.last_name}</h6>
+                        <span>{student.class_name}</span>
                       </div>
                     </div>
                   </td>
-                  <td>{guardian.relationship}</td>
+                  
                      
-                  <td><Button onClick={()=> navigate(`/guardians/${guardian.id}`)} className="btn" color="info">
+                  <td><Button onClick={()=> navigate(`/students/${student.id}`)} className="btn" color="info">
              More
             </Button></td>
-            <td><Button onClick={()=> handleShowConfirmation(guardian.id)} className="btn-danger" >
+            <td><Button onClick={()=> handleShowConfirmation(student.id)} className="btn-danger" >
              Remove
             </Button></td>
 
@@ -126,30 +131,14 @@ const navigate = useNavigate()
               ))}
             </tbody>
           </Table>       
-          
-       
-        <div className="d-grid mt-3">
-        <Button className="btn" color="primary"  block onClick={()=>navigate(`/${studentId}/guardian_registration`)} >
-                 Add New Guardians
-                </Button>
-                </div>
+   
                 </CardBody>
-      </Card>
-    </Col>
+                </>
 
 
     )
     
     )}
-
-
-
-    <Col sm="6" lg="6" xl="5" xxl="4">      {/* --------------------------------------------------------------------------------*/}
-      {/* Card-2*/}
-      {/* --------------------------------------------------------------------------------*/}
-      
-    </Col>
-    
 
     <Modal show={showConfirmation} onHide={handleCancelAction}>
         <Modal.Header closeButton>
@@ -171,4 +160,4 @@ const navigate = useNavigate()
   )
 }
 
-export default GuardiansList
+export default StudentList
