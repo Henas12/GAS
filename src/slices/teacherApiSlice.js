@@ -37,6 +37,18 @@ allTeachers:builder.query({
 }),
 
 
+// removeSection: builder.mutation({
+//   query: (formData) => ({
+//     url:  `${BASE_URL}/hrts/manage_grade/`,
+//     method: 'PATCH',
+//     body: formData,
+    
+//   }),
+
+
+// }),
+
+
 activateTeacher: builder.mutation({
   query: (formData) => ({
     url:  `${BASE_URL}/hrts/activate/`,

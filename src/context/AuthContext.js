@@ -37,8 +37,8 @@ export const AuthProvider = ({ children }) => {
       },
     });
     const userInfo = await response1.json(); 
-     if (response.status === 200) {
-      console.log(response)
+    if (userInfo.is_active){  if (response.status === 200) {
+    
       setAuthTokens(data);
       setUser(jwtDecode(data.access));     
       localStorage.setItem('authTokens', JSON.stringify(data));
@@ -47,13 +47,26 @@ export const AuthProvider = ({ children }) => {
         dispatch(setuser({...userInfo}))
         
         if(userInfo.is_autheticator)
-      navigateTo('/home'); // Redirect to home page upon login
+      {navigateTo('/home');
+     }// Redirect to home page upon login
     else if(userInfo.is_hrt){
       navigateTo('/teacher/home')
     }
-    } else {
-      toast.error('Invalid Credential!');
+
+    else if(userInfo.is_parent){
+      navigateTo('/parent/home')
     }
+    } 
+    
+    else {
+      toast.error('Invalid Credential!');
+    }}
+
+    else{
+      toast.error('You are not activate');
+    }
+
+    
   };
 
   const logoutUser = () => {

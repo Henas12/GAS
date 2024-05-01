@@ -1,38 +1,67 @@
 
 import React from 'react';
 import { Form, Col, Row,CardBody,Card, CardTitle,Alert,Button } from 'react-bootstrap';
-import Webcam from 'react-webcam';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import Apps from '../../views/ui/Apps'
-import { resetStudent } from "../../slices/studentSlice";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate,useParams } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
+import { BASE_URL } from '../../constants';
+import { useContext } from 'react';
 const ContactForm = () => {
+
+  const [isLoading1, setIsLoading1] = useState(true);
+
+  let{authTokens}= useContext(AuthContext)
+  const [datas, setDatas]= useState({})
+
   
+  const { id: studentId } = useParams();
+  async function sendContactBook() {
+    try {
+      const response = await fetch(`${BASE_URL}/students/${studentId}/contactbooks/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + String(authTokens.access),
+          'Content-Type': 'application/json',
+        },
+       
+
+          body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+  
+    
+      setIsLoading1(false); // Set loading state to false after data is fetched
+    } catch (error) {
+      toast.error('Error fetching data:', error);
+      
+      setIsLoading1(false); // Set loading state to false if an error occurs
+    }
+  }
+
+
     const [formData, setFormData] = useState({
-        username : '',
-        email: '',
-        gender:'',
-       date_of_birth:"",
-        first_name : '',
-        last_name : '',
-        phone_number : '',
-        address : '',
+       
     
       });
 
-      const handleGuadianInputChange = ()=>{
-console.log('hena')
-      }
+      const handleGuadianInputChange = (event)=>{
+const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });   
+     }
 
       
-      const Updata = ()=>{
-        console.log('hena')
+      const update = (event)=>{
+        
+        event.preventDefault();
+        console.log(formData)
+        sendContactBook()
+        console.log(formData)
               }
 
-  const newLocal = <option value="Need Improvement">Need Improvement</option>;
   return(
 
          
@@ -51,15 +80,15 @@ Information
      
         <CardBody className="">
 
-              <Form >
+              <Form  onSubmit={update}>
 
 
           <Row className="mb-3">
    
             <Col>
-            <Form.Group controlId="parentFollowUp">
+            <Form.Group controlId="parent_follow_up">
             <Form.Label style={{ fontWeight: 'bold' }}>Parent Follow Up</Form.Label>
-            <Form.Control  required as="select" name="parentFollowUp"  onChange={handleGuadianInputChange}>
+            <Form.Control  required as="select" name="parent_follow_up"  onChange={handleGuadianInputChange}>
             <option value="">Select Level</option>
             <option value="Very Good">Very Good</option>
             <option value="Good">Good</option>
@@ -69,9 +98,9 @@ Information
             
             </Col>
             <Col>
-            <Form.Group controlId="handWriting">
+            <Form.Group controlId="hand_writing">
             <Form.Label style={{ fontWeight: 'bold' }}> Hand Writing</Form.Label>
-            <Form.Control  required as="select" name="handWriting"  onChange={handleGuadianInputChange}>
+            <Form.Control  required as="select" name="hand_writing"  onChange={handleGuadianInputChange}>
             <option value="">Select Level</option>
             <option value="Very Good">Very Good</option>
             <option value="Good">Good</option>
@@ -89,9 +118,9 @@ Information
             <Row className="mb-3">
    
    <Col>
-   <Form.Group controlId="readingSkill">
+   <Form.Group controlId="reading_skill">
    <Form.Label style={{ fontWeight: 'bold' }}>Reading Skill</Form.Label>
-   <Form.Control  required as="select" name="readingSkill"  onChange={handleGuadianInputChange}>
+   <Form.Control  required as="select" name="reading_skill"  onChange={handleGuadianInputChange}>
    <option value="">Select Level</option>
    <option value="Very Good">Very Good</option>
    <option value="Good">Good</option>
@@ -101,9 +130,9 @@ Information
    
    </Col>
    <Col>
-   <Form.Group controlId="materialHandling">
+   <Form.Group controlId="material_handling">
    <Form.Label style={{ fontWeight: 'bold' }}> Material Handling</Form.Label>
-   <Form.Control  required as="select" name="materialHandling"  onChange={handleGuadianInputChange}>
+   <Form.Control  required as="select" name="material_handling"  onChange={handleGuadianInputChange}>
    <option value="">Select Level</option>
    <option value="Very Good">Very Good</option>
    <option value="Good">Good</option>
@@ -130,9 +159,9 @@ Information
    </Col>
    
    <Col>
-   <Form.Group controlId="wearUniform">
+   <Form.Group controlId="wear_uniform">
    <Form.Label style={{ fontWeight: 'bold' }}>Wear Uniform</Form.Label>
-   <Form.Control  required as="select" name="wearUniform"  onChange={handleGuadianInputChange}>
+   <Form.Control  required as="select" name="wear_uniform"  onChange={handleGuadianInputChange}>
    <option value="">Select One</option>
    <option value="Yes">Yes</option>
    <option value="No">No</option>
@@ -145,9 +174,9 @@ Information
    <Row className="mb-3">
    
    <Col>
-   <Form.Group controlId="HasGoodTimeWhileEating">
+   <Form.Group controlId="has_good_time_while_eating">
    <Form.Label style={{ fontWeight: 'bold' }}>Has Good time While Eating</Form.Label>
-   <Form.Control  required as="select" name="HasGoodTimeWhileEating"  onChange={handleGuadianInputChange}>
+   <Form.Control  required as="select" name="has_good_time_while_eating"  onChange={handleGuadianInputChange}>
    <option value="">Select One</option>
    <option value="Yes">Yes</option>
    <option value="No">No</option>
@@ -157,9 +186,9 @@ Information
    </Col>
    
    <Col>
-   <Form.Group controlId="activeParticipation">
+   <Form.Group controlId="active_participation">
    <Form.Label style={{ fontWeight: 'bold' }}>Active Participation</Form.Label>
-   <Form.Control  required as="select" name="activeParticipation"  onChange={handleGuadianInputChange}>
+   <Form.Control  required as="select" name="active_participation"  onChange={handleGuadianInputChange}>
    <option value="">Select One</option>
    <option value="Yes">Yes</option>
    <option value="No">No</option>
@@ -171,9 +200,9 @@ Information
    </Row>
 
 
-   <Form.Group controlId="teacherComment" className="mb-3">
+   <Form.Group controlId="teacher_comment" className="mb-3">
       <Form.Label style={{fontWeight:'bold'}}>Teacher Comment</Form.Label>
-      <Form.Control as="textarea"  name='teacherComment' required rows={3} />
+      <Form.Control as="textarea"  name='teacher_comment' required rows={3}  onChange={handleGuadianInputChange} />
     </Form.Group>
 
 
@@ -183,7 +212,7 @@ Information
             
            
            
-            <Button variant="primary" onClick={Updata}>
+            <Button variant="primary" type='submit' >
     Submit Informaion
      </Button>
    

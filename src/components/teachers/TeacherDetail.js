@@ -17,18 +17,23 @@ const {data:sections ,isLoading:isSectionLoading, error:logError} = useGradeQuer
 
 const [assignSections, {isLoading:isassignSection}] = useAssignSectionMutation()
 const [activateTeacher, {isLoading:isActivateTeacher}] = useActivateTeacherMutation()
-
+// const [filteredSection, setFilteredSection] = useState({}) 
 
 const {data, isLoading, error, refetch} = useGetSingleTeacherQuery(guardianId)
 const [userStatus, setUserStatus] = useState()
-
+const [grade, setGrade] = useState()
 const navigate = useNavigate()
 useEffect(()=>{
   if (!isLoading){
  setUserStatus(data.user.is_active ? true : false);
 
   }
- 
+  if (!isSectionLoading){
+    let section = sections.filter(section => section.home_room_teacher === guardianId);
+    setGrade(section)
+    console.log(section[0]?.grade)
+   
+     }
 
 
 },[isLoading,isSectionLoading])
@@ -74,9 +79,11 @@ const assignSection = async(id) => {
    
    
 
-    (isLoading||isSectionLoading
+    (isLoading||isSectionLoading ||isassignSection
       ? <Loader/>:
     ( 
+
+
       <div style={{ display: 'flex', justifyContent: 'center' }}>
  <Card style={{ width: '80%' }}   className="p-5">
    
@@ -119,6 +126,12 @@ const assignSection = async(id) => {
             <span className="info-label">Date of Birth:</span>
             <span className="info-value">{data.user.date_of_birth}</span>
           </div>
+          <div className="user-info-item">
+            <span className="info-label">Assigned Grade:</span>
+            <span className="info-value">{(sections.filter(section => section.home_room_teacher === guardianId)[0]?.grade)? (sections.filter(section => section.home_room_teacher === guardianId)[0].grade) : "Grade is Not Assigned"}</span>
+          </div>
+
+
           <div className="user-info-item">
             <span className="info-label">Status:</span>
             {!data.user.is_active?  (
@@ -184,7 +197,7 @@ const assignSection = async(id) => {
 
       </Card>
       </div>
-      
+    
       )
       
            )

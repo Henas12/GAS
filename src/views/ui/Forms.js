@@ -12,7 +12,7 @@ const MultiStepForm = () => {
     grade: '',
     image: 'null'
   });
-
+  
 const [newGuardian, setNewGuardian] = useState(false)
 
   const [formErrors, setFormErrors] = useState({});

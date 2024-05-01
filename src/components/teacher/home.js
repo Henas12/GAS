@@ -52,13 +52,14 @@ function Home() {
         },
        
 
-          body: JSON.stringify({date: "2024-04-21"}),
+          body: JSON.stringify({date: "2024-05-01"}),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setStudentId(data.students)
+      console.log(data.students)
       setIsLoading1(false); // Set loading state to false after data is fetched
     } catch (error) {
       toast.error('Error fetching data:', error);
@@ -70,11 +71,12 @@ function Home() {
   useEffect(()=>{
 
     
+      
     
     fetchData();
     attendance()
 
-
+    
 
   
   },[])
@@ -90,22 +92,28 @@ function Home() {
    (
   <Loader/>
 ):
+datas?
 (
   datas.map((data) => (
     <Col sm="6" lg="4" key={data.id}>
       <TopCards
         bg="bg-light-success text-success"
+        id  = {data.id}
         title={data.first_name}
         subtitle="Present"
         earning={`${data.first_name} ${data.last_name}`}
         icon="bi bi-people-fill"
       />
-      {  studentId[0]}
-       { studentId.includes(data.id)?'hena':'mikei'};
+      
+       { studentId.includes(data.id)?'pres':'miki'};
 
     </Col>
   ))
-) 
+) :(<>
+<h1>No Student is Assigned</h1>
+</>)
+
+
 }
    
   </Row>

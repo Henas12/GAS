@@ -48,14 +48,14 @@ const MultiStepForm = () => {
       
     }
    
-    const { studentInfo } = useSelector((state) => state.student);
-    const dispatch = useDispatch()
+    // const { studentInfo } = useSelector((state) => state.student);
+    // const dispatch = useDispatch()
     
-    useEffect(()=>{
-       if(studentInfo){
-          dispatch(resetStudent())
-       }
-    },[])
+    // useEffect(()=>{
+    //    if(studentInfo){
+    //       dispatch(resetStudent())
+    //    }
+    // },[])
 
   
   
