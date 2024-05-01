@@ -33,15 +33,21 @@ allTeachers:builder.query({
         
       }),
 
+  
+}),
+
+
+activateTeacher: builder.mutation({
+  query: (formData) => ({
+    url:  `${BASE_URL}/hrts/activate/`,
+    method: 'POST',
+    body: formData,
     
+  }),
+})
+
 
   })
-})
-})
-export const { useAllTeachersQuery, useDeleteTeacherMutation,useGetSingleTeacherQuery,useAssignSectionMutation} = guardiansApiSlice;
 
-
-// export const { useCreateOrderMutation,
-//   useGetOrderDetailsQuery,
-//   usePayOrderMutation,
-//   useGetPaypalClientIdQuery, useGetMyOrdersQuery} = orderApiSlice;
+})
+export const { useAllTeachersQuery, useDeleteTeacherMutation,useGetSingleTeacherQuery,useAssignSectionMutation, useActivateTeacherMutation} = guardiansApiSlice;

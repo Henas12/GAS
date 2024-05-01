@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Row,Col } from 'react-bootstrap';
+import { Button,Card, Modal, Row,Col } from 'react-bootstrap';
 import TopCards from '../../components/dashboard/StudentsCard';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
@@ -11,35 +11,68 @@ import { toast } from 'react-toastify';
 function Home() {
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoading1, setIsLoading1] = useState(true);
+
   let{authTokens}= useContext(AuthContext)
   const [datas, setDatas]= useState({})
+  const [studentId, setStudentId]= useState([])
+  async function fetchData() {
+    try {
+      const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + String(authTokens.access),
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setDatas(data);
+      console.log(data)
+      setIsLoading(false); // Set loading state to false after data is fetched
+    } catch (error) {
+      toast.error('Error fetching data:', error);
+      // Handle error here
+      setIsLoading(false); // Set loading state to false if an error occurs
+    }
+  }
+
+
+
+
+  async function attendance() {
+    try {
+      const response = await fetch(`${BASE_URL}/attendance/get_attendance/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + String(authTokens.access),
+          'Content-Type': 'application/json',
+        },
+       
+
+          body: JSON.stringify({date: "2024-04-21"}),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setStudentId(data.students)
+      setIsLoading1(false); // Set loading state to false after data is fetched
+    } catch (error) {
+      toast.error('Error fetching data:', error);
+      // Handle error here
+      setIsLoading1(false); // Set loading state to false if an error occurs
+    }
+  }
 
   useEffect(()=>{
 
-    async function fetchData() {
-      try {
-        const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + String(authTokens.access),
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setDatas(data);
-        console.log(data)
-        setIsLoading(false); // Set loading state to false after data is fetched
-      } catch (error) {
-        toast.error('Error fetching data:', error);
-        // Handle error here
-        setIsLoading(false); // Set loading state to false if an error occurs
-      }
-    }
+    
     
     fetchData();
+    attendance()
 
 
 
@@ -49,11 +82,11 @@ function Home() {
 
 
   return (
-    
+
     <Row>
 
    
-   {isLoading ? 
+   {isLoading || isLoading1 ? 
    (
   <Loader/>
 ):
@@ -67,18 +100,16 @@ function Home() {
         earning={`${data.first_name} ${data.last_name}`}
         icon="bi bi-people-fill"
       />
+      {  studentId[0]}
+       { studentId.includes(data.id)?'hena':'mikei'};
+
     </Col>
   ))
 ) 
 }
-
-
-
- 
-
-
    
   </Row>
+ 
 
   );
 }

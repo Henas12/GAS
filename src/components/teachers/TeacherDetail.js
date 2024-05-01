@@ -9,33 +9,44 @@ import { useNavigate } from 'react-router-dom';
 import './UserInfoDisplay.css';
 import { useGradeQuery } from '../../slices/studentApiSlice';
 import { useGetSingleTeacherQuery } from '../../slices/teacherApiSlice';
-import { useAssignSectionMutation } from '../../slices/teacherApiSlice';
+import { useAssignSectionMutation,useActivateTeacherMutation } from '../../slices/teacherApiSlice';
 function TeacherDetail() {
 const { id: guardianId } = useParams();
 
 const {data:sections ,isLoading:isSectionLoading, error:logError} = useGradeQuery()
 
 const [assignSections, {isLoading:isassignSection}] = useAssignSectionMutation()
+const [activateTeacher, {isLoading:isActivateTeacher}] = useActivateTeacherMutation()
+
 
 const {data, isLoading, error, refetch} = useGetSingleTeacherQuery(guardianId)
 const [userStatus, setUserStatus] = useState()
+
 const navigate = useNavigate()
 useEffect(()=>{
   if (!isLoading){
- setUserStatus(data.user.is_active ? 'Active' : 'Inactive');
+ setUserStatus(data.user.is_active ? true : false);
 
   }
-  if (!isSectionLoading){
-    console.log(sections,'hena')
-   
-     }
+ 
 
 
 },[isLoading,isSectionLoading])
 
-const handleStatusChange = (status) => {
-  setUserStatus(status);
-  // You can add logic here to update the user status in the backend
+const handleStatusChange = async(status) => {
+  try{
+    const res = await activateTeacher(
+      {hrt_id:data.user.id}
+     )
+     toast.success(res.data.detail)
+    refetch()
+   }
+   catch(error){
+     toast.error(error?.data)
+   }
+ 
+
+
 };
 
 
@@ -45,6 +56,8 @@ const assignSection = async(id) => {
 
   try{
     const res = await assignSections(data)
+    toast.success(res.data.detail)
+
     console.log(res)
     refetch()
    }
@@ -61,7 +74,8 @@ const assignSection = async(id) => {
    
    
 
-    (isLoading||isSectionLoading? <Loader/>:
+    (isLoading||isSectionLoading
+      ? <Loader/>:
     ( 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
  <Card style={{ width: '80%' }}   className="p-5">
@@ -107,12 +121,23 @@ const assignSection = async(id) => {
           </div>
           <div className="user-info-item">
             <span className="info-label">Status:</span>
-            <span className={`info-value ${userStatus}`}>{userStatus}</span>
-            {!data.user.is_active && (
-              <Button variant="success" onClick={() => handleStatusChange('Active')}>
+            {!data.user.is_active?  (
+            <>
+            <span className={`info-value ${userStatus}`}>Inactive</span>
+           
+              <Button variant="success" onClick={() => handleStatusChange(true)}>
                 Activate
               </Button>
-            )}
+              </>
+            ): (
+              <>
+              <span className={`info-value ${userStatus}`}>Active</span>
+
+            
+            <Button variant="success" onClick={() => handleStatusChange(false)}>
+            Deactivate
+          </Button>
+          </>) }
           </div>
          
         </div>
