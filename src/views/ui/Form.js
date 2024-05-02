@@ -154,7 +154,7 @@ const MultiStepForm = () => {
           
           <Card>
             <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-              Studen Registration Form
+              Student Registration Form
             </CardTitle>
             <CardBody className="">
               <div className="button-group">

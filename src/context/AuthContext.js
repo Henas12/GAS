@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }) => {
     else if(userInfo.is_parent){
       navigateTo('/parent/home')
     }
+    
     } 
     
     else {

@@ -5,50 +5,43 @@ import {toast} from 'react-toastify'
 import AuthContext from "../../context/AuthContext";
 import { BASE_URL } from "../../constants";
 import { useContext,useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const Attendance = () => {
 
-  
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   let{authTokens}= useContext(AuthContext)
   const [datas, setDatas]= useState({})
   const [student, setStudent] =  useState({})
+ 
 
-  useEffect(()=>{
-
-    async function fetchData() {
-      try {
-        const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + String(authTokens.access),
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setDatas(data);
-        console.log(data)
-        setIsLoading(false); // Set loading state to false after data is fetched
-      } catch (error) {
-        toast.error('Error fetching data:', error);
-        // Handle error here
-        setIsLoading(false); // Set loading state to false if an error occurs
+  async function fetchData() {
+    try {
+      const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + String(authTokens.access),
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      const data = await response.json();
+      setDatas(data);
+      console.log(data)
+      setIsLoading(false); // Set loading state to false after data is fetched
+    } catch (error) {
+      toast.error('Students are not assiggned');
+      // Handle error here
+      setIsLoading(false); // Set loading state to false if an error occurs
     }
-    
+  }
+  useEffect(()=>{   
     fetchData();
 
-
-
-  
   },[])
-
-
-
   const attendance = (student_id, index) => {
-
     if (student[index] !== undefined) {
       // If the index is already assigned, remove the student
       setStudent((prev) => {
@@ -57,19 +50,15 @@ const Attendance = () => {
         return updatedStudent;
       });
       console.log(`Student at index ${index} is removed.`);
-      
       return;
- 
   };
     setStudent((prev) => ({
       ...prev,
       [index]: student_id // Use computed property names to set the property dynamically
     }));
   };
-
   const handleAttendance= async()=>{
     try {
-
     const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
       method: 'POST',
       headers: {
@@ -78,10 +67,12 @@ const Attendance = () => {
       },
       body: JSON.stringify(student),
     });
+
+    navigate('/teacher/home')
   }
   catch (error) {
     toast.error(' Error taking Attendance ');
-    // Handle error here
+   
   }
 }
 
@@ -90,7 +81,11 @@ const Attendance = () => {
   return (
 
     isLoading?<Loader/>: 
-   ( <Row>
+   ( 
+   
+    datas.length > 0 ?
+     (
+   <Row>
     <Col lg="12">
       <Card>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
@@ -126,8 +121,9 @@ const Attendance = () => {
       </Card>
     </Col>
   </Row>
-  )
-  );
+  ):(<h1>No Student is assigned</h1>)
+
+  ))
 };
 
 export default Attendance;

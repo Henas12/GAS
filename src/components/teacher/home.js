@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button,Card, Modal, Row,Col } from 'react-bootstrap';
-import TopCards from '../../components/dashboard/StudentsCard';
+import TopCards from '../dashboard/StudentList';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import { BASE_URL } from '../../constants';
 import Loader from '../../layouts/loader/Loader';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 function Home() {
+  const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true);
   const [isLoading1, setIsLoading1] = useState(true);
@@ -33,13 +35,15 @@ function Home() {
       console.log(data)
       setIsLoading(false); // Set loading state to false after data is fetched
     } catch (error) {
-      toast.error('Error fetching data:', error);
+      // toast.error('Error fetching data:', error);
       // Handle error here
       setIsLoading(false); // Set loading state to false if an error occurs
     }
   }
 
-
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString().split('T')[0];
+  console.log(formattedDate)
 
 
   async function attendance() {
@@ -52,7 +56,7 @@ function Home() {
         },
        
 
-          body: JSON.stringify({date: "2024-05-01"}),
+          body: JSON.stringify({date: formattedDate }),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -62,7 +66,7 @@ function Home() {
       console.log(data.students)
       setIsLoading1(false); // Set loading state to false after data is fetched
     } catch (error) {
-      toast.error('Error fetching data:', error);
+      // toast.error('Error fetching data:', error);
       // Handle error here
       setIsLoading1(false); // Set loading state to false if an error occurs
     }
@@ -92,26 +96,37 @@ function Home() {
    (
   <Loader/>
 ):
-datas?
-(
-  datas.map((data) => (
-    <Col sm="6" lg="4" key={data.id}>
-      <TopCards
-        bg="bg-light-success text-success"
-        id  = {data.id}
-        title={data.first_name}
-        subtitle="Present"
-        earning={`${data.first_name} ${data.last_name}`}
-        icon="bi bi-people-fill"
-      />
-      
-       { studentId.includes(data.id)?'pres':'miki'};
 
-    </Col>
-  ))
-) :(<>
-<h1>No Student is Assigned</h1>
-</>)
+(
+  datas.length > 0 ?
+   (
+
+    studentId.length>0? 
+    (datas.map((data) => (
+      <Col sm="6" lg="4" key={data.id}>
+        <TopCards
+          bg="bg-light-success text-success"
+          id={data.id}
+          title={data.first_name}
+          subtitle=  {studentId.includes(data.id) ? 'present' : 'absent'}
+
+          earning={`${data.first_name} ${data.last_name}`}
+          icon={data.image}
+        />
+        
+  
+      </Col>
+    ))
+  ):(<div className="text-center">
+  <h1>No students available</h1>
+  <button className="btn btn-primary mt-3" onClick={()=> navigate('/teacher/attendance')}>Take Attendance</button>
+</div>) ):
+  
+(
+    <h1>No data available</h1>
+  )
+  
+) 
 
 
 }

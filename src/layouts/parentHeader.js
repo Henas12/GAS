@@ -66,7 +66,7 @@ const Header = () => {
       <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <Link to="/teacher/home" className="nav-link" style={{color:"white",paddingLeft:"30px", fontSize:'20px', textDecoration: 'none', // Remove underline by default
+            <Link to="/parent/home" className="nav-link" style={{color:"white",paddingLeft:"30px", fontSize:'20px', textDecoration: 'none', // Remove underline by default
              transition: 'text-decoration 0.3s ease'}}
          
              onMouseOver={(e) => {
@@ -80,24 +80,9 @@ const Header = () => {
               Home
             </Link>
           </NavItem>
+          
           <NavItem>
-            <Link to="/teacher/attendance" className="nav-link"style={{color:"white",paddingLeft:"30px", fontSize:'20px', textDecoration: 'none', // Remove underline by default
-             transition: 'text-decoration 0.3s ease'}}
-         
-             onMouseOver={(e) => {
-              e.currentTarget.style.color = 'lightgray';
-              e.currentTarget.style.textDecoration = 'underline';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.color = 'white';
-              e.currentTarget.style.textDecoration = 'none';
-            }}>
-              Attendance
-            </Link>
-          </NavItem>
-
-          <NavItem>
-            <Link to="/teacher/unread"
+            <Link to="/parent/unread"
             className="nav-link" style={{color:"white",paddingLeft:"30px", fontSize:'20px', textDecoration: 'none', // Remove underline by default
             transition: 'text-decoration 0.3s ease'}}
         
@@ -113,23 +98,7 @@ const Header = () => {
             </Link>
           </NavItem>
 
-          <NavItem>
-            <Link to="/teacher/all"
-             className="nav-link" style={{color:"white",paddingLeft:"30px", fontSize:'20px', textDecoration: 'none', // Remove underline by default
-             transition: 'text-decoration 0.3s ease'}}
-         
-             onMouseOver={(e) => {
-              e.currentTarget.style.color = 'lightgray';
-              e.currentTarget.style.textDecoration = 'underline';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.color = 'white';
-              e.currentTarget.style.textDecoration = 'none';
-            }}
-             >
-            All
-            </Link>
-          </NavItem>
+          
         </Nav>
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle color="transparent">

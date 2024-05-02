@@ -7,6 +7,7 @@ import "./assets/scss/style.scss";
 import Starter from './views/Starter';
 import FullLayout from './layouts/FullLayout';
 import Student from './views/ui/Student';
+import Search from './components/Registration/Search';
 
 import {
     createBrowserRouter,
@@ -63,6 +64,15 @@ import Teachers from './views/ui/Teachers';
 import Teacher from './views/ui/Teacher';
 import Authenticator from './views/ui/Authenticator';
 import Authenticators from './views/ui/Authenticators';
+import Unread from './components/teacher/Unread';
+import ContactTable from './components/teacher/allStudentContactBook';
+import SpecficStudent from './components/teacher/SpecficStudent';
+import ContactDetail from './components/teacher/ContactDetail';
+import ContactFormParent from './components/specailGuardian/ContactFormParent';
+import ContactDetailParent from './components/specailGuardian/ContactDetailParent';
+import UnreadParent from './components/specailGuardian/Unread';
+import ParentRoute from './utils/Parent';
+
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -115,7 +125,7 @@ const router = createBrowserRouter(
           <Route path='/parent-register' element={<ParentRegistrationForm />} /> 
           <Route path='/teacher-register' element={<HomeRTForm />} /> 
           <Route path='/authenticator-register' element={<AuthenticatorForm />} /> 
-
+       
 
           
 
@@ -133,11 +143,25 @@ const router = createBrowserRouter(
 <Route path='/teacher' element={<HrtBase />}> 
 <Route path='/teacher/home' element=  { <TeacherRoute> <THome /></TeacherRoute> } /> 
 <Route path='/teacher/:id' element={ <TeacherRoute><ContactForm /> </TeacherRoute>} /> 
-<Route path='/teacher/attedance/' element={<TeacherRoute> <Attendance /></TeacherRoute>} /> 
+<Route path='/teacher/attendance/' element={<TeacherRoute> <Attendance /></TeacherRoute>} /> 
+<Route path='/teacher/unread/' element={<TeacherRoute> <Unread /></TeacherRoute>} /> 
+<Route path='/teacher/all/' element={<TeacherRoute> <ContactTable /></TeacherRoute>} /> 
+<Route path='/teacher/search/' element={<TeacherRoute> <Search /></TeacherRoute>} /> 
+<Route path='/teacher/contact-book/:id' element={<TeacherRoute> <SpecficStudent /></TeacherRoute>} /> 
+<Route path='/teacher/student/contact-book/:id' element={<TeacherRoute> <ContactDetail /></TeacherRoute>} /> 
+
 </Route>
 
-<Route path='/guardian' element={<GuardianBase />}> 
-<Route path='/guardian/home' element={<GuardianHome/>} /> 
+<Route path='/parent' element={<GuardianBase />}> 
+<Route path='/parent/home' element={<ParentRoute><GuardianHome/></ParentRoute> } /> 
+<Route path='/parent/unread' element={<ParentRoute><UnreadParent/></ParentRoute>} /> 
+
+<Route path='/parent/contact-book/:id' element={<ParentRoute><ContactFormParent/></ParentRoute>} /> 
+<Route path='/parent/student/contact-book/:id' element={<ParentRoute><ContactDetailParent/></ParentRoute>} /> 
+
+
+          
+
 </Route>
 
           </>    
