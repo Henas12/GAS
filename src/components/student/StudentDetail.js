@@ -92,7 +92,7 @@ const [formData, setFormData] = useState({
           </Form.Group>
           <Form.Group className='mb-3' controlId="formGrade">
           <Form.Label>Grade</Form.Label>
-          <Form.Control disabled as="select" name="grade" value={data.grade}  >
+          <Form.Control disabled as="select" name="grade" value={data.grade.grade}  >
           <option value="">Select Grade</option>
       <option value="Nursery">Nursery</option>
       <option value="KG">KG</option>

@@ -1,4 +1,5 @@
 import { useMyContext } from '../../components/MyContext';
+import { useGradeQuery } from '../../slices/studentApiSlice';
 import {
     Card,
     CardImg,
@@ -18,8 +19,10 @@ import {
 import { toast } from 'react-toastify';
 import { useGetSingleGuardianQuery } from '../../slices/guardiansApiSlice';
   import { useParams } from 'react-router-dom';
-  
-
+import { useEffect } from 'react';  
+import { useContext } from 'react';
+import { BASE_URL } from '../../constants';
+import AuthContext from '../../context/AuthContext';
 function Mystudents() {
 
   const cardstyle = {
@@ -27,14 +30,15 @@ function Mystudents() {
     boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.8)'
   }
   const { id: guardianId } = useParams();
-  console.log(guardianId)
+  
   const {data, isLoading:guardianIsLoading, error, refetch} = useGetSingleGuardianQuery(guardianId)
 
 
 
+  let{authTokens}= useContext(AuthContext)
   const navigate = useNavigate()
-  const { myData } = useMyContext();
-console.log(myData)
+
+
 const [createLog, {isLoading}] = useCreateLogMutation()
 
 const handleClick = () => {
@@ -47,13 +51,36 @@ const logHandler =async(studentId)=>{
   let mydata= {"guardian_id":guardianId,
                "student_id":studentId
   }
+
+  try {
+    const response = await fetch(`${BASE_URL}/verify/create_log/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + String(authTokens.access),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(mydata),
+    });
+    toast.success(response?.data?.message)
+
+    refetch()
+  }
+  catch{
+    toast.error('Error')
+    refetch()
+  }
    
-     const res = await createLog(mydata)
-     toast.success(res?.data?.message)
-     refetch()
-     console.log(res)
+    
+   
+   
 }
 
+useEffect(()=>{
+if(!guardianIsLoading){
+  console.log(data)
+}
+
+},[guardianIsLoading])
 
   return (
     <>
@@ -78,8 +105,11 @@ const logHandler =async(studentId)=>{
                         <CardImg alt="Card image cap" src={student.image} style={{ width: '100%', height: '250px' }} />
                         <CardBody className="p-4">
                           <CardTitle tag="h5">Full Name: {student.first_name} {student.last_name}</CardTitle>
-                          <CardSubtitle>Grade: {student.grade}        </CardSubtitle>
-                          
+
+                         
+                        
+                          <CardSubtitle>Grade: {student.grade.grade}        </CardSubtitle>
+
                           { student.is_present &&<Button color='primary' onClick={() => logHandler(student.id)}>Take</Button>}
                         </CardBody>
           

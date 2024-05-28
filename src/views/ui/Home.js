@@ -1,16 +1,23 @@
-import { Card, CardBody, CardTitle,Badge, CardSubtitle, CardText, Button, Form, FormGroup, Input } from 'reactstrap';
+import { Card, CardBody, CardTitle,Badge, CardSubtitle, CardText,Label, Button, FormGroup, Input } from 'reactstrap';
+
+import {Form} from "react-bootstrap";
+
 import {useState} from 'react'
 import React from 'react'
-// import * as faceapi from 'face-api.js';
+import { useContext } from "react";
+
+import * as faceapi from 'face-api.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useVerficationMutation } from '../../slices/guardiansApiSlice';
 import { UseDispatch, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../constants';
 import Loader from "../../layouts/loader/Loader";
+import AuthContext from '../../context/AuthContext';
 import { useMyContext } from '../../components/MyContext';
 
-export const Home = () => {
+ const Home = () => {
 
 
   const navigate = useNavigate()
@@ -18,32 +25,35 @@ export const Home = () => {
 
 
   const [status, setStatus] = useState(null);
-
+  let{authTokens}= useContext(AuthContext)
 const dispatch = useDispatch()
   const [verify, { isLoading }] = useVerficationMutation()
-  const videoRef = React.useRef();
-  const canvasRef = React.useRef();
-  const [captureVideo, setCaptureVideo] = React.useState(false);
-  const [detectedFaceDataURL, setDetectedFaceDataURL] = React.useState(null);
-  const [faceImageDataBlob, setFaceImageDataBlob] = React.useState(null);
+//   const videoRef = React.useRef();
+//   const canvasRef = React.useRef();
+//   const [captureVideo, setCaptureVideo] = React.useState(false);
+//   const [detectedFaceDataURL, setDetectedFaceDataURL] = React.useState(null);
+//   const [faceImageDataBlob, setFaceImageDataBlob] = React.useState(null);
   
-  const [inputValue, setInputValue] = React.useState(null);
+//   const [inputValue, setInputValue] = React.useState(null);
+//   const [relation, setRelation] = React.useState(null);
 
+  
 
-  const videoHeight = 480;
-  const videoWidth = 640;
+//   const videoHeight = 480;
+//   const videoWidth = 640;
 
-  // React.useEffect(() => {
-  //   const loadModels = async () => {
-  //     const MODEL_URL = process.env.PUBLIC_URL + '/models';
+//   React.useEffect(() => {
+//     const loadModels = async () => {
+//       const MODEL_URL = process.env.PUBLIC_URL + '/models';
 
-  //     await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-  //     await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-  //     await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-  //   };
+//       await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+//           await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 
-  //   loadModels();
-  // }, []);
+//       await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+//     };
+
+//     loadModels();
+//   }, []);
 
   // const startVideo = () => {
 
@@ -69,14 +79,17 @@ const dispatch = useDispatch()
 
 
 //   const startVideo = () => {
-//     if (inputValue) {
+//     if (inputValue && relation) {
 //       setCaptureVideo(true);
   
       
 //       const constraints = {
 //         video: {
 //           deviceId: {
-//             exact: 'd20bb8383db1d0d64bd877025e10a886b88be0d003f866e4fa310b9e7c7a3c1d',
+//             // exact: 'e7ce19c7a536d93ba1ac85d3cf517b856fffd8c920036a977dbec52b3833a5a3',
+//             exact: '895debfcdf8675954186dd4d96050a36e0d885dbf382151e0b3f97f40e4b06b9',
+
+            
 //           },
 //           width: 300,
 //         },
@@ -119,12 +132,10 @@ const dispatch = useDispatch()
 //         faceapi.matchDimensions(canvasRef.current, displaySize);
   
 //         const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()
-  
 //         const resizedDetections = faceapi.resizeResults(detections, displaySize);
   
 //         canvasRef && canvasRef.current && canvasRef.current.getContext('2d').clearRect(0, 0, videoWidth, videoHeight);
 //         canvasRef && canvasRef.current && faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
-//         canvasRef && canvasRef.current && faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
   
 //         if (resizedDetections.length > 0) {
 //           counter++;
@@ -133,7 +144,7 @@ const dispatch = useDispatch()
 //             const faceImageDataUrl = await captureDetectedFace(   resizedDetections[0]?.detection);
 //             setDetectedFaceDataURL(faceImageDataUrl);
 //             // setFaceImageDataBlob(faceImageDataUrl)
-//             sendDataToBackend(inputValue, faceImageDataUrl);
+//             sendDataToBackend(inputValue,relation, faceImageDataUrl);
 //             closeWebcam();
 //           }
 //         }
@@ -172,21 +183,33 @@ const dispatch = useDispatch()
 
 
 
-// const sendDataToBackend = async (username, faceImageDataUrl) => {
+// const sendDataToBackend = async (username,relation, faceImageDataUrl) => {
 //   const response = await fetch(faceImageDataUrl);
+//   console.log(relation)
 //   const blob = await response.blob();
 //   const formData = new FormData();
 //   formData.append('username', username);
 //   formData.append('user_photo', blob, 'face_image.jpg');
-//   try {
-//     const response = await verify(formData).unwrap()
-    
+//   formData.append('person', relation);
+
   
-//     setStatus(response.status);
-//     setMyData(response);
-//     setMyData(response);
-//         navigate(`/mykid/${response.id}`)   
-//   } catch (error) {    
+    
+//     try {
+     
+//             const response = await verify(formData).unwrap()
+            
+          
+//             setStatus(response.status);
+//             setMyData(response);
+//             setMyData(response);
+//             console.log(response)
+//                 // navigate(`/mykid/${response.id}`)   
+//           }
+  
+     
+  
+//         // navigate(`/mykid/${response.id}`)   
+//    catch (error) {    
   
 //     toast.error(error?.data.detail ||error?.data.error);
 //   }
@@ -220,13 +243,35 @@ const dispatch = useDispatch()
 
     
 //       {!captureVideo && (
-//         <Input
+//         <>
+
+     
+//       <Input
 //         type="text"
 //         placeholder="Enter Username"
 //         value={inputValue}
 //         onChange={(e) => setInputValue(e.target.value)}
 //         style={{ width: '250px',border:" 1px solid #CCCCCC", margin: '0 auto', textAlign: 'center', marginTop:"30px" }}
-//       />
+//       />  
+        
+    
+// <Form.Control  onChange={(e) => setRelation(e.target.value)} as="select" id='relation' name="relationship" style={{ width: '250px',border:" 1px solid #CCCCCC", margin: '0 auto', textAlign: 'center', marginTop:"30px" }} >
+// <option value="">Select Relation</option>
+// <option value="parent">Parent</option>
+// <option value="other">Other</option>
+// </Form.Control>
+    
+
+//         </>
+        
+
+      
+
+
+
+
+
+      
 //       )}
 //       <div style={{ textAlign: 'center', padding: '10px' }}>
 //         {!captureVideo ? (
@@ -255,6 +300,7 @@ const dispatch = useDispatch()
     const [formData, setFormData] = useState({
       name: '',
       image: null,  // Use null to represent no file initially
+      person: 'other'
     });
   
     const handleChange = (e) => {
@@ -326,4 +372,4 @@ const dispatch = useDispatch()
     );
   };
 
-
+export default  Home;

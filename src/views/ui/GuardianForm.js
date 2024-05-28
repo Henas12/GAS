@@ -163,6 +163,7 @@ const GuardianForm = () => {
          setGuardianFormDatas={setGuardianFormDatas} 
          setNewGuardian={setNewGuardian}
          newGuardian={newGuardian}
+        
          />
       ) : (
         <>
@@ -198,6 +199,8 @@ const GuardianForm = () => {
                     setRefetchs={setRefetchs}
                     refetchs={refetchs}
                     setFormData= {setGuardianFormData}
+                    setNewGuardian={setNewGuardian}
+
                   />
                
                 {/* ... other components ... */}

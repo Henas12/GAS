@@ -28,7 +28,7 @@ import Tables from './views/ui/Tables';
 import Breadcrumbs from './views/ui/Breadcrumbs';
 import Forms from './views/ui/Forms';
 import Registration from './views/ui/Registration'
-import { Home } from './views/ui/Home';
+import Home  from './views/ui/Home';
 import Test from './views/ui/test';
 import THome from './components/teacher/home'
 import MultiStepForm from './views/ui/Form';
@@ -72,19 +72,20 @@ import ContactFormParent from './components/specailGuardian/ContactFormParent';
 import ContactDetailParent from './components/specailGuardian/ContactDetailParent';
 import UnreadParent from './components/specailGuardian/Unread';
 import ParentRoute from './utils/Parent';
+import Home1 from './Landing/pages/Home'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
+
+<Route path='/' element={<Home1 />} /> 
           <Route path='/' element={<App />}>
-          <Route path='/' element={<Starter />} /> 
+          <Route path='/dashboard' element={<Starter />} /> 
           
           <Route path='/video' element={<VideoRecorder />} /> 
-
-            <Route path='/students/:id' element={<Student />} /> 
+                   <Route path='/students/:id' element={<Student />} /> 
             <Route path='/:id/guardian_registration' element={<GuardianForm />} /> 
             <Route path='/:id/parent-assign' element={<ParentForm />} /> 
-
             <Route path='/students' element={<Students />} /> 
             <Route path='/parents' element={<Parents />} /> 
             <Route path='/guardians' element={<Guardians />} />
@@ -92,21 +93,13 @@ const router = createBrowserRouter(
             <Route path='/teachers/:id' element={<Teacher />} />
             <Route path='/authenticators' element={<Authenticators />} />
             <Route path='/authenticators/:id' element={<Authenticator />} />
-
-
             <Route path='/guardians/:id' element={<Guardian />} />
             <Route path='/parents/:id' element={<Parent />} />
-
             <Route path='/app' element={<Apps />} /> 
             <Route path='/student_registration' element={<MultiStepForm />} /> 
             <Route path='/students/update/:id' element={<StudentUpdate />} /> 
             <Route path='/guardians/update/:id' element={<GuardianUpdate />} /> 
-
-
-            
             <Route path='/mykid' element={<Mystudents />} /> 
-           
-           
             <Route path='/attendance' element={<Attendance />} /> 
             <Route path='/badges' element={<Badges />} /> 
             <Route path='/buttons' element={<Buttons />} /> 
@@ -118,6 +111,10 @@ const router = createBrowserRouter(
             {/* <Route path='/register' element={<Registration />} />    */}
           </Route>   
 
+
+        
+
+          
           <Route path='/' element={<New />}> 
           
           <Route path='/activate' element={<ActivationPage />} /> 

@@ -96,7 +96,7 @@ isLoading? (<Loader/>) : (
                   
                 </div>
               </td>
-              <td>{student.grade}</td>
+              <td>{student.grade.grade}</td>
               
               
               <td><Button onClick={()=> navigate(`/students/${student.id}`)} className="btn" color="info">

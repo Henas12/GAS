@@ -31,7 +31,7 @@ function Home() {
         }
         const data = await response.json();
         setDatas(data);
-        console.log(data)
+    
         setIsLoading(false); 
       } catch (error) {
         toast.error('Error fetching data:', error);

@@ -32,7 +32,7 @@ function UnreadParent() {
       const data = await response.json();
       let contactBookInfo = data.filter(contactBook => contactBook.is_read_p === false)
       setDatas(contactBookInfo);
-      console.log(contactBookInfo)
+     
       setIsLoading(false); 
     } catch (error) {
       toast.error('Error fetching data:', error);

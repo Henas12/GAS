@@ -27,8 +27,7 @@ export default function GuardianSummary({ setPreview,  guardianFormData, guardia
         valuesList.push(value);
       }
       
-      console.log(valuesList);
-      console.log(guardianFormDatas);
+      
 
 
 

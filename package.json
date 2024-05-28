@@ -32,7 +32,17 @@
     "react-webcam": "^7.2.0",
     "reactstrap": "9.2.0",
     "sass": "1.63.2",
-    "web-vitals": "3.3.2"
+    "web-vitals": "3.3.2",
+   
+    "react-countup": "^6.1.1",
+   
+    "react-player": "^2.9.0",
+    "react-scripts": "4.0.3",
+    "react-slick": "^0.28.1",
+  
+    "remixicon": "^2.5.0",
+    "slick-carousel": "^1.8.1"
+   
   },
   "scripts": {
     "start": "react-scripts start",

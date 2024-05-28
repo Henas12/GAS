@@ -99,7 +99,7 @@ const navigate = useNavigate()
                       <img
                       // src={`http://10.42.0.61:8000${guardian?.user_photo}`}
                       
-                      src={`${BASE_URL}${guardian?.user_photo}`}
+                      src={`${BASE_URL}${guardian?.user_photo_1}`}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"

@@ -106,7 +106,7 @@ const navigate = useNavigate()
 
     
   cb_id:cbId,
-    p_comment: "",
+   
   
   
     });
@@ -268,7 +268,7 @@ Information
 
     <Form.Group controlId="teacher_comment" className="mb-3">
       <Form.Label style={{fontWeight:'bold'}}>Parent Comment</Form.Label>
-      <Form.Control as="textarea"  name='parent_comment' required rows={3}    onChange={handleGuadianInputChange}  />
+      <Form.Control as="textarea"  name='p_comment' required rows={3}    onChange={handleGuadianInputChange}  />
     </Form.Group>
            
 

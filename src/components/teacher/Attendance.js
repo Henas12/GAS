@@ -49,15 +49,16 @@ const Attendance = () => {
         delete updatedStudent[index]; // Remove the student at the specified index
         return updatedStudent;
       });
-      console.log(`Student at index ${index} is removed.`);
       return;
   };
     setStudent((prev) => ({
       ...prev,
-      [index]: student_id // Use computed property names to set the property dynamically
+      [index]: student_id 
     }));
   };
   const handleAttendance= async()=>{
+
+  
     try {
     const response = await fetch(`${BASE_URL}/hrts/take_attendance/`, {
       method: 'POST',
