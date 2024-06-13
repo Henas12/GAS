@@ -46,6 +46,7 @@ const dispatch = useDispatch()
       navigate(`/${res.id}${redirect}`)
 
     } catch (err) {
+      console.log(err)
       toast.error(err?.data?.message || err.error);
     }
 

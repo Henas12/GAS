@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-
+import ServerChecker from './error/ServerChecker';
+import { BASE_URL } from '../constants';
 const MyContext = createContext();
 
 export const MyContextProvider = ({ children }) => {
@@ -9,9 +10,11 @@ export const MyContextProvider = ({ children }) => {
   };
 
   return (
+<ServerChecker url={BASE_URL}>
     <MyContext.Provider value={{ myData, setMyData: setMyDataValue }}>
       {children}
     </MyContext.Provider>
+    </ServerChecker>
   );
 };
 

@@ -99,7 +99,7 @@ useEffect(()=>{
 { data?  
 (<Card>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
-          Guardians List
+          Parent List
         </CardTitle>
         <CardBody className="">
 
@@ -130,12 +130,12 @@ useEffect(()=>{
                         height="45"
                       />
                       <div className="ms-3">
-                        <h6 className="mb-0">{guardian.first_name} {guardian.last_name}</h6>
-                        <span className="text-muted">{guardian.username}</span>
+                        <h6 className="mb-0">{guardian.user.first_name} {guardian.user.last_name}</h6>
+                        <span className="text-muted">{guardian.user.username}</span>
                       </div>
                     </div>
                   </td>
-                  <td>{guardian.relationship}</td>
+                  <td>Father</td>
                      
                   <td><Button onClick={()=> navigate(`/parents/${guardian.user.id}`)} className="btn" color="info">
              More

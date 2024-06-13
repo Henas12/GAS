@@ -6,7 +6,7 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
    
     studentRegistration: builder.mutation({
       query: (formDatas) => ({
-        url: `${BASE_URL}/students/`,
+        url: `${BASE_URL}/student_reg/`,
         method: 'POST',
         body: formDatas,
         

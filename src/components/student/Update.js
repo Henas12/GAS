@@ -124,7 +124,7 @@ if (data && !isLoading){
           </Form.Group>
           <Form.Group className='mb-3' controlId="formGrade">
           <Form.Label>Grade</Form.Label>
-          <Form.Control as="select" name="grade" value={formData.grade || data.grade} onChange={handleInputChange} >
+          <Form.Control as="select" name="grade" value={formData.grade || data.grade.grade} onChange={handleInputChange} >
           <option value="">Select Grade</option>
       <option value="Nursery">Nursery</option>
       <option value="KG">KG</option>

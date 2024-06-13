@@ -98,7 +98,7 @@ const navigate = useNavigate()
                  <img
                  // src={`http://10.42.0.61:8000${guardian.user?.user_photo}`}
                  
-                 src={`${BASE_URL}${guardian.user?.user_photo_1}`}
+                 src={`${BASE_URL}${guardian?.user_photo_1}`}
                    className="rounded-circle"
                    alt="avatar"
                    width="45"
@@ -150,7 +150,7 @@ const navigate = useNavigate()
      Recent Activities
    </CardTitle>
    <CardBody className="">
-   {/* <Feeds /> */}
+   <Feeds />
    </CardBody>
  </Card>
 </Col>

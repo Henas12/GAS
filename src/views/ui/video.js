@@ -85,7 +85,7 @@ const VideoRecorder = () => {
   }, []);
 
   return (
-    <div className="recording-container">
+    <div style={{marginTop:"70px"}} className="recording-container">
       <video ref={videoRef} autoPlay className="video-element" />
       <div className="button-container">
         {isRecording ? (

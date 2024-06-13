@@ -90,11 +90,11 @@ const Feeds = () => {
               </Button>
               <div style={{disply:"flex"}}>
                 <div>
-               Guardian: <small className="ms-auto text-muted text-small"> @{feed.guardian.username} </small>
+               Picked By: <small className="ms-auto text-muted text-small"> @{feed.guardian.username} </small>
 
                 </div>
 <div>
-Staff:<small className="ms-auto text-muted text-small"> @{feed.staff.user.username}</small>
+Give by:<small className="ms-auto text-muted text-small"> @{feed.authenticator.user.username}</small>
 
 </div>
               </div>

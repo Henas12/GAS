@@ -8,7 +8,11 @@ import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
-
+import { useAllParentsQuery } from "../slices/ParentApiSlice";
+import { useAllGuardiansQuery } from "../slices/guardiansApiSlice";
+import { useAllTeachersQuery } from "../slices/teacherApiSlice";
+import { useGetStudentsQuery } from "../slices/studentApiSlice";
+import Loader from "../layouts/loader/Loader";
 const BlogData = [
   {
     image: bg1,
@@ -45,8 +49,16 @@ const BlogData = [
 ];
 
 const Starter = () => {
+
+  const {data:guardians, isLoading, error, refetch} = useAllGuardiansQuery()
+  const {data:parents, isLoading:isParentLoading} = useAllParentsQuery()
+  const {data:students, isLoading:isStudentsLoading} = useGetStudentsQuery()
+  const {data:teachers, isLoading:isTeachersLoading} = useAllTeachersQuery()
+
+
   return (
-    <div>
+    ( isLoading || isParentLoading|| isStudentsLoading|| isTeachersLoading ? <Loader/>:
+      <div>
       {/*Top Cards*/}
       <Row>
         <Col sm="6" lg="3">
@@ -54,7 +66,7 @@ const Starter = () => {
             bg="bg-light-success text-success"
             title="Students"
             subtitle="Students"
-            earning="2,100"
+            earning={students.length}
             icon="bi bi-people-fill"
           />
         </Col>
@@ -65,16 +77,18 @@ const Starter = () => {
             bg="bg-light-warning text-warning"
             title="Guardians"
             subtitle="Guardians"
-            earning="456"
+            earning={parseInt(guardians.length) + parseInt(parents.length)}
             icon="bi bi-people"
           />
         </Col>
+
+       
         <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-info text-into"
             title="Staff"
             subtitle="Staff"
-            earning="210"
+            earning='9'
             icon="bi bi-people"
           />
         </Col>
@@ -94,6 +108,8 @@ const Starter = () => {
       </Row>
      
     </div>
+  )
+    
   );
 };
 

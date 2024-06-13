@@ -131,15 +131,15 @@ const [formData, setFormData] = useState({
       {/* --------------------------------------------------------------------------------*/}
       <Card>
         <CardTitle tag="h3" className="border-bottom p-3 mb-0">
-          Image
+        <h2 className="fw-bold mb-2 text-center text-uppercase ">
+                  Image
+                </h2>
         </CardTitle>
 
             <Card.Body>
               
               <div className="mb-3 mt-md-4">
-                <h2 className="fw-bold mb-2 text-center text-uppercase ">
-                  Image
-                </h2>
+                
                 <div className="mb-3">
                 <Image src={data.image} alt="Image description" fluid />
                  

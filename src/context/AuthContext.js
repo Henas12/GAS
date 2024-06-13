@@ -1,9 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
-
 import { setuser, resetuser } from '../slices/staffSilce';
-
 import {  useDispatch } from 'react-redux';
 import { BASE_URL } from '../constants';
 const AuthContext = createContext();
@@ -21,57 +19,93 @@ export const AuthProvider = ({ children }) => {
     window.location.href = path;
   };
   const loginUser = async (username, password) => {
-    let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: username, password: password }),
-    });
-    let data = await response.json();
-    let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Authorization':  `Bearer ${ data.access}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    const userInfo = await response1.json(); 
-    if (userInfo.is_active){  if (response.status === 200) {
-    
-      setAuthTokens(data);
-      setUser(jwtDecode(data.access));     
-      localStorage.setItem('authTokens', JSON.stringify(data));
-   
+    try{
+      let response = await fetch(`${BASE_URL}/auth/jwt/create/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username, password: password }),
+      });
+      console.log(response.detail)
+      if(response.status == 401) 
+        {
+toast.error("Invalid Credential")
+        }
+
+        else{
+          let data = await response.json();
+          let response1 = await fetch(`${BASE_URL}/auth/users/me/`, {
+            method: 'GET',
+            headers: {
+              'Authorization':  `Bearer ${ data.access}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          const userInfo = await response1.json(); 
+          console.log(userInfo);
+          if(!userInfo.is_first_login)
+            {
+                if (userInfo.is_active){  
+                  
+                  if (response.status === 200) {
+                
+                  setAuthTokens(data);
+                  setUser(jwtDecode(data.access));     
+                  localStorage.setItem('authTokens', JSON.stringify(data));
+              
+                  
+                    dispatch(setuser({...userInfo}))
+                    
+                    if(userInfo.is_autheticator)
+                  {navigateTo('/home');
+                }// Redirect to home page upon login
+                else if(userInfo.is_hrt){
+                  navigateTo('/teacher/home')
+                }
       
-        dispatch(setuser({...userInfo}))
+                else if(userInfo.is_parent){
+                  navigateTo('/parent/home')
+                }
+                  else if(userInfo.is_staff){
+                  navigateTo('/dashboard')
+                }
+                
+                else {
+                  navigateTo('/home')
+                }
+                
+                } 
+                
+                else {
+                  toast.error('Invalid Credential!');
+                }
+              
+              }
+      
+                else{
+                  toast.error('You are not activate');
+                }
+        }
+          else{
+
+            setAuthTokens(data);
+            setUser(jwtDecode(data.access));     
+            localStorage.setItem('authTokens', JSON.stringify(data));
+              dispatch(setuser({...userInfo}))
+            navigateTo('/activate-account');
+            toast.info('Activate Your Account');
+          }
+        }
+  
+    }
+   
+  
+     catch(error){
+      toast.error(error.detail)
+     }
         
-        if(userInfo.is_autheticator)
-      {navigateTo('/home');
-     }// Redirect to home page upon login
-    else if(userInfo.is_hrt){
-      navigateTo('/teacher/home')
-    }
-
-    else if(userInfo.is_parent){
-      navigateTo('/parent/home')
-    }
-    else {
-      navigateTo('/home')
-    }
-    
-    } 
-    
-    else {
-      toast.error('Invalid Credential!');
-    }}
-
-    else{
-      toast.error('You are not activate');
-    }
-
-    
-  };
+    };
 
   const logoutUser = () => {
     setAuthTokens(null);

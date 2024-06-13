@@ -82,7 +82,7 @@ const navigate = useNavigate()
             <div className="d-flex align-items-center p-2">
               <img
               
-              src={guardian.user_photo}
+              src={guardian.user_photo_1}
                 className="rounded-circle"
                 alt="avatar"
                 width="45"

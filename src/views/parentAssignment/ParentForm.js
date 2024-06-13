@@ -4,8 +4,8 @@ import { Form, Image, ProgressBar,  ButtonGroup,
   Card,
   CardBody,
   CardTitle,Button, Col, Row } from 'react-bootstrap';
-import GuardiansInfo from '../../components/Registration/GuardiansInfo';
-import GuardianInfoForm from './ParentInfoForm';
+import GuadiansInfo from './ParentInfo';
+  import GuardianInfoForm from './ParentInfoForm';
 import { useNewParentAssignMutation } from '../../slices/registrationApiSlice';
 import { toast } from 'react-toastify';
 const ParentForm = () => {
@@ -59,7 +59,11 @@ try{
         } catch (err) {
           
           toast.error(err?.detail) 
-          toast.error(err?.data?.message || (err.data?.username?err.data?.username[0]:`${err?.data?.detail}`));
+          console.log(err)
+
+
+
+          toast.error(err?.data?.message || (err.data.user?.username? err.data.user?.username[0] :`${err?.user?.detail}`));
         }
       
       }
@@ -83,7 +87,6 @@ try{
   const handleGuadianInputChange = (event) => {
     const { name, value } = event.target;
     setGuardianFormData({ ...guardianFormData, [name]: value });
-    // Clear the error message when the user starts typing in the field
     setFormErrors({ ...formErrors, [name]: '' });
   };
 
@@ -108,7 +111,7 @@ try{
           
           <Card>
             <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-              Guardian Registration Form
+              Parent Registration Form
             </CardTitle>
             <CardBody className="">
               <div className="button-group">
@@ -152,7 +155,7 @@ try{
           
           <Card>
             <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-              Guardians
+              Parents
             </CardTitle>
             <CardBody className="">
             <div className="button-group">
@@ -181,7 +184,7 @@ try{
            </div>)
              :  
              
-             <GuardiansInfo
+             <GuadiansInfo
               refetchs={refetchs} setRefetch={setRefetchs}
              />
                    

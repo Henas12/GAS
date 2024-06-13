@@ -4,6 +4,7 @@ import '../../../Registration.css'
 import logo from '../../../assets/images/logos/logo.svg'
 import { useParentRegistrationMutation } from '../../../slices/registrationApiSlice';
 import { Form, Image,ProgressBar, Button, Col, Row, Alert } from 'react-bootstrap';
+
 import { useNavigate } from 'react-router-dom';
 const ParentRegistrationForm = () => {
   const navigate = useNavigate()
@@ -72,7 +73,7 @@ console.log(data)
       console.log(res)
       
       toast.success('User is Registered')
-      navigate('/activate')
+      
      
    
     } catch (err) {

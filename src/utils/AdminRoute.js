@@ -6,7 +6,7 @@ const AdminRoute = ({children, ...rest}) => {
     const { userInfo } = useSelector((state) => state.user);
     let {user} = useContext(AuthContext)
  
-    return !(user && userInfo?.is_superuser) ?  <Navigate to='/login'/> : children;
+    return !(user && userInfo?.is_staff) ?  <Navigate to='/login'/> : children;
 }
 
 export default AdminRoute;

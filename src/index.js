@@ -72,8 +72,12 @@ import ContactFormParent from './components/specailGuardian/ContactFormParent';
 import ContactDetailParent from './components/specailGuardian/ContactDetailParent';
 import UnreadParent from './components/specailGuardian/Unread';
 import ParentRoute from './utils/Parent';
-import Home1 from './Landing/pages/Home'
-
+import Home1 from './Landing/pages/Home';
+import Activate from './views/Activate';
+import ServerChecker from './components/error/ServerChecker';
+import { BASE_URL } from './constants';
+import ParentRegister from './views/parentAssignment/ParentRegister';
+import RegisterChoice from './assets/scss/RegisterChoice';
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -82,7 +86,7 @@ const router = createBrowserRouter(
           <Route path='/' element={<App />}>
           <Route path='/dashboard' element={<Starter />} /> 
           
-          <Route path='/video' element={<VideoRecorder />} /> 
+ 
                    <Route path='/students/:id' element={<Student />} /> 
             <Route path='/:id/guardian_registration' element={<GuardianForm />} /> 
             <Route path='/:id/parent-assign' element={<ParentForm />} /> 
@@ -108,6 +112,9 @@ const router = createBrowserRouter(
             <Route path='/breadcrumbs' element={<Breadcrumbs />} /> 
             <Route path='/grid' element={<Grid />} /> 
             <Route path="/register" element={<AdminRoute><Registration/></AdminRoute>} /> 
+       
+            <Route path="/:id/registration_parent" element={<ParentRegister/>} /> 
+
             {/* <Route path='/register' element={<Registration />} />    */}
           </Route>   
 
@@ -119,6 +126,11 @@ const router = createBrowserRouter(
           
           <Route path='/activate' element={<ActivationPage />} /> 
           <Route path='/login' element={<Login />} /> 
+          <Route path='/activate-account' element={<Activate />} /> 
+          <Route path='/video' element={<VideoRecorder />} /> 
+          <Route path='/register-choice' element={<RegisterChoice />} /> 
+
+          
           <Route path='/parent-register' element={<ParentRegistrationForm />} /> 
           <Route path='/teacher-register' element={<HomeRTForm />} /> 
           <Route path='/authenticator-register' element={<AuthenticatorForm />} /> 
@@ -167,12 +179,23 @@ const router = createBrowserRouter(
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
+      
+      <ServerChecker url = {BASE_URL}>
        <Provider store={store}>
        <MyContextProvider>
+       
+        
+      
+
+
        <AuthProvider>
             <RouterProvider router={router} />
             </AuthProvider>
+     
+
+           
             </MyContextProvider>
             </Provider>
+            </ServerChecker>
     </React.StrictMode>
   );

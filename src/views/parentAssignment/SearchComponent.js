@@ -15,7 +15,7 @@ const SearchComponent = ({ data, onSearch }) => {
     <div>
 
 <Form.Group controlId="formStep3">
-      <Form.Label>Search Guardians</Form.Label>
+      <Form.Label>Search Parents</Form.Label>
       <Form.Control
         type="text"
         placeholder="Search..."

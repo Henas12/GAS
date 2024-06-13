@@ -16,7 +16,7 @@ const GuardianInfoForm = ({ webcamRef, formData,newGuardian,setNewGuardian, hand
   const dispatch = useDispatch()
   const clearEveryting=()=>{
     dispatch(resetStudent());
-    navigate('/student_registration')
+    navigate(`/${studentId}/registration_parent`)
   }
 
   const {id: studentId} = useParams();
@@ -79,6 +79,11 @@ const GuardianInfoForm = ({ webcamRef, formData,newGuardian,setNewGuardian, hand
     </Button> */}
 
 <div className="d-flex justify-content-between">
+
+<Button variant="primary" onClick={clearEveryting}>
+            Register New Parent
+            </Button>
+
             <Button variant="primary" onClick={(()=>
             navigate(`/${studentId}/guardian_registration`))
 
@@ -87,9 +92,7 @@ const GuardianInfoForm = ({ webcamRef, formData,newGuardian,setNewGuardian, hand
             
                  Register Guardians
             </Button>
-            <Button variant="primary" onClick={clearEveryting}>
-              Finished
-            </Button>
+           
           </div>
 
 

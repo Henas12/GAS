@@ -25,7 +25,7 @@ function Login() {
           
            
             <div className="mb-3">
-              <label>Username address</label>
+              <label>Username</label>
               <input
                 type="text"
                 className="form-control"
@@ -64,6 +64,10 @@ function Login() {
             <p className="forgot-password text-right">
               Forgot <a href="#">password?</a>
             </p>
+
+            <h4>
+              Dont have an account? <a href="#"> Sign Up</a>
+            </h4>
           </form>
         </div>
       </div>
