@@ -51,7 +51,7 @@ import GuardianUpdate from './components/guardian/GuardianUpdate';
 import GuardianBase from './GuardianBase';
 import GuardianHome from './components/specailGuardian/home'
 import VideoRecorder from './views/ui/video';
-import HomeRTForm from './components/users/homeroomTeacher/HomeRTForm';
+// import HomeRTForm from './components/users/homeroomTeacher/HomeRTForm';
 import AuthenticatorForm from './components/users/authenticator/AuthenticatorForm';
 import ParentRegistrationForm from './components/users/parent/ParentForm';
 import ParentForm from './views/parentAssignment/ParentForm';
@@ -78,6 +78,7 @@ import ServerChecker from './components/error/ServerChecker';
 import { BASE_URL } from './constants';
 import ParentRegister from './views/parentAssignment/ParentRegister';
 import RegisterChoice from './assets/scss/RegisterChoice';
+import HomeRTForm from './views/ui/HomeRoomForm';
 const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -114,7 +115,9 @@ const router = createBrowserRouter(
             <Route path="/register" element={<AdminRoute><Registration/></AdminRoute>} /> 
        
             <Route path="/:id/registration_parent" element={<ParentRegister/>} /> 
+            <Route path="/teacher-register" element={<HomeRTForm/>} /> 
 
+            
             {/* <Route path='/register' element={<Registration />} />    */}
           </Route>   
 
@@ -132,7 +135,7 @@ const router = createBrowserRouter(
 
           
           <Route path='/parent-register' element={<ParentRegistrationForm />} /> 
-          <Route path='/teacher-register' element={<HomeRTForm />} /> 
+          {/* <Route path='/teacher-register' element={<HomeRTForm />} />  */}
           <Route path='/authenticator-register' element={<AuthenticatorForm />} /> 
        
 

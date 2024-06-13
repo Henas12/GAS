@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
-import './choice.css'
+// import './choigit ce.css'
 import logo from '../images/logos/logo.svg'
 import { useNavigate } from 'react-router-dom';
 

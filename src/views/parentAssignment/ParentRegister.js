@@ -150,7 +150,7 @@ console.log(data)
 
     <Col xs="12" md="6">
       
-      <Card>
+      <Card >
         <CardTitle tag="h6" className="border-bottom p-3 mb-0">
           Guardian Registration Form
         </CardTitle>
